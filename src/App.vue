@@ -10,18 +10,14 @@
       <v-btn>Updates</v-btn>
       <v-menu open-on-hover>
         <template v-slot:activator="{ props }">
-          <v-btn color="info" v-bind="props"
-            >Tianxu Zhang<v-icon>mdi-menu-down</v-icon></v-btn
-          >
+          <v-btn color="info" v-bind="props">Tianxu Zhang<v-icon>mdi-menu-down</v-icon></v-btn>
         </template>
         <v-list :items="items" item-title="title" item-value="title" />
       </v-menu>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer">
       <v-sheet color="grey-lighten-4" class="pa-4">
-        <v-btn prepend-icon="mdi-calendar-account" color="primary"
-          >Schedule a Post</v-btn
-        >
+        <v-btn prepend-icon="mdi-calendar-account" color="primary">Schedule a Post</v-btn>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -44,51 +40,40 @@
 
     <v-main class="flex-8">
       <v-container class="py-8 px-6" fluid>
-        {{ "Some content" }}
+        {{ 'Some content' }}
       </v-container>
     </v-main>
-    <v-footer
-      height="120"
-      class="flex-2 bg-indigo-lighten-1 text-center d-flex flex-column"
-    >
+    <v-footer height="120" class="flex-2 bg-indigo-lighten-1 text-center d-flex flex-column">
       <div>
-        <v-btn
-          v-for="icon in icons"
-          :key="icon"
-          class="mx-4"
-          :icon="icon"
-          variant="text"
-        ></v-btn>
+        <v-btn v-for="icon in icons" :key="icon" class="mx-4" :icon="icon" variant="text"></v-btn>
       </div>
       <v-divider></v-divider>
-      <div>
-        {{ new Date().getFullYear() }} — <strong>Group Your of Biz</strong>
-      </div>
+      <div>{{ new Date().getFullYear() }} — <strong>Group Your of Biz</strong></div>
     </v-footer>
   </v-app>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   data: () => ({
     items: [
-      { title: "Settings" },
-      { title: "Help Center" },
-      { title: "Affiliate Program" },
-      { title: "r/groupyourofbiz" },
-      { title: "Logout" },
+      { title: 'Settings' },
+      { title: 'Help Center' },
+      { title: 'Affiliate Program' },
+      { title: 'r/groupyourofbiz' },
+      { title: 'Logout' },
     ],
     drawer: false,
-    icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
+    icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
     links: [
-      ["mdi-palette-outline", "Dashboard"],
-      ["mdi-history", "History"],
-      ["mdi-google-analytics", "Analytics"],
-      ["mdi-library", "Content library"],
-      ["mdi-cog-outline", "Settings"],
-      ["mdi-logout", "Logout"],
+      ['mdi-palette-outline', 'Dashboard'],
+      ['mdi-history', 'History'],
+      ['mdi-google-analytics', 'Analytics'],
+      ['mdi-library', 'Content library'],
+      ['mdi-cog-outline', 'Settings'],
+      ['mdi-logout', 'Logout'],
     ],
   }),
   methods: {

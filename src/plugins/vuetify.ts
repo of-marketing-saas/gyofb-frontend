@@ -1,12 +1,12 @@
 // Styles
-import "@mdi/font/css/materialdesignicons.css";
-import "vuetify/styles";
+import '@mdi/font/css/materialdesignicons.css';
+import 'vuetify/styles';
 
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
 
 // Vuetify
-import { createVuetify } from "vuetify";
+import { createVuetify } from 'vuetify';
 
 export default createVuetify({
   components,
