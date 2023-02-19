@@ -10,6 +10,14 @@
       "StackName": "amplify-gyofbfrontend-dev-164416",
       "StackId": "arn:aws:cloudformation:us-west-2:961913736334:stack/amplify-gyofbfrontend-dev-164416/8a622b00-afee-11ed-9391-0aa309fd57bb",
       "AmplifyAppId": "d398kv8yeh6ttc"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d398kv8yeh6ttc",
+          "type": "cicd"
+        }
+      }
     }
   }
 }
