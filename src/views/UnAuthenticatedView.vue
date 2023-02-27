@@ -19,22 +19,20 @@
           />
         </v-card>
       </v-container>
-      <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
-        <div>
-          <v-btn v-for="icon in icons" :key="icon" class="mx-4" :icon="icon" variant="text"></v-btn>
-        </div>
-        <v-divider></v-divider>
-        <div>{{ new Date().getFullYear() }} <strong>@ Group Your OnlyFan Biz</strong></div>
-      </v-footer>
+      <layout-footer />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import LayoutFooter from '@/components/layout/LayoutFooter.vue';
 import logo from '../assets/logo.png';
 
 export default defineComponent({
+  components: {
+    LayoutFooter,
+  },
   data: () => ({
     logo: logo,
     items: [
