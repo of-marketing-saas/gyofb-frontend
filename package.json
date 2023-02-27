@@ -16,6 +16,7 @@
     "@mdi/font": "^7.1.96",
     "@types/webfontloader": "^1.6.35",
     "aws-amplify": "^5.0.15",
+    "moment": "^2.29.4",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
