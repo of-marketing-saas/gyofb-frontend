@@ -12,12 +12,7 @@
     </v-app-bar>
     <v-main class="flex-8">
       <v-container class="d-flex flex-1 py-8 px-6" fluid>
-        <v-card width="100%">
-          <v-img
-            src="https://ca-times.brightspotcdn.com/dims4/default/02c4991/2147483647/strip/true/crop/4491x3062+0+0/resize/1200x818!/format/webp/quality/80/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F13%2F78%2Fcf56e2b63d7966cbcefbc68b75a6%2F36c77fe97a494484b249f85c65774df3"
-            cover
-          />
-        </v-card>
+        <v-card width="100%"> Unauthorized Landing page </v-card>
       </v-container>
       <layout-footer />
     </v-main>

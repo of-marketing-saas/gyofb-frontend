@@ -13,8 +13,8 @@
         </template>
         <v-list :items="items" item-title="title" item-value="title" />
       </v-menu>
-      <layout-drawer :drawer="drawer" :on-toggle-drawer="() => onClick()" />
     </v-app-bar>
+    <layout-drawer :drawer="drawer" :on-toggle-drawer="() => (drawer = !drawer)" />
 
     <v-main class="flex-8">
       <v-container class="d-flex flex-1 py-8 px-6" fluid>
@@ -38,22 +38,13 @@ export default defineComponent({
   },
   data: () => ({
     logo: logo,
+    drawer: true,
     items: [
       { title: 'Settings' },
       { title: 'Help Center' },
       { title: 'Affiliate Program' },
       { title: 'r/groupyourofbiz' },
       { title: 'Logout' },
-    ],
-    drawer: true,
-    icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
-    links: [
-      ['mdi-palette-outline', 'Dashboard', '/dashboard'],
-      ['mdi-history', 'History'],
-      ['mdi-google-analytics', 'Analytics'],
-      ['mdi-library', 'Content library'],
-      ['mdi-cog-outline', 'Settings'],
-      ['mdi-logout', 'Logout'],
     ],
   }),
   methods: {

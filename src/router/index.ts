@@ -45,17 +45,17 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const auth = useAuthenticator();
-  const isAuthenticated = auth.authState === 'signedIn';
-  if (isAuthenticated && to.name === 'guest') {
-    next({ name: 'index' });
-  }
-  if (!isAuthenticated) {
-    if (to.name !== 'guest' && to.name !== 'authenticator') {
-      next({ name: 'guest' });
-      return;
-    }
-  }
+  // const auth = useAuthenticator();
+  // const isAuthenticated = auth.authState === 'signedIn';
+  // if (isAuthenticated && to.name === 'guest') {
+  //   next({ name: 'index' });
+  // }
+  // if (!isAuthenticated) {
+  //   if (to.name !== 'guest' && to.name !== 'authenticator') {
+  //     next({ name: 'guest' });
+  //     return;
+  //   }
+  // }
   next();
 });
 
