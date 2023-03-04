@@ -1,12 +1,13 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
   <v-card width="100%">
-    <v-card-title>
+    <v-card-title class="d-flex flex-row align-center">
       Post Dashboard
       <v-spacer></v-spacer>
       <v-text-field
+        density="comfortable"
         v-model="search"
-        append-icon="mdi-magnify"
+        prepend-icon="mdi-magnify"
         label="Search"
         single-line
         hide-details

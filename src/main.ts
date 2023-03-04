@@ -1,5 +1,7 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import { QuillEditor } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import App from './App.vue';
 import router from './router';
 import vuetify from './plugins/vuetify';
@@ -12,4 +14,9 @@ Amplify.configure(awsExports);
 
 loadFonts();
 
-createApp(App).use(createPinia()).use(router).use(vuetify).mount('#app');
+createApp(App)
+  .use(createPinia())
+  .use(router)
+  .use(vuetify)
+  .component('quill-editor', QuillEditor)
+  .mount('#app');
