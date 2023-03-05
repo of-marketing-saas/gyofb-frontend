@@ -5,7 +5,7 @@ export const getRedditToken = async (queryCode: string) => {
   const payload = {
     grant_type: 'authorization_code',
     code: queryCode,
-    redirect_uri: 'http://localhost:5173/reddit/authorized',
+    redirect_uri: 'https://main.d398kv8yeh6ttc.amplifyapp.com/reddit/authorized',
   };
   const data = await axios.post(
     'https://www.reddit.com/api/v1/access_token',
@@ -20,7 +20,7 @@ export const getRedditToken = async (queryCode: string) => {
   return data.data;
 };
 
-export const getUser = async (token: string) => {
+export const getRedditUser = async (token: string) => {
   const data = await axios.get('https://oauth.reddit.com/api/v1/me.json', {
     headers: {
       Authorization: `bearer ${token}`,

@@ -31,7 +31,7 @@ export default defineComponent({
       redditConfig: {
         clientId: 'MwUgAW99DEm37iz2z4u3uQ',
         responseType: 'code',
-        redirectUri: 'http://localhost:5173/reddit/authorized',
+        redirectUri: 'https://main.d398kv8yeh6ttc.amplifyapp.com/reddit/authorized',
         duration: 'permanent',
         scope: 'identity edit flair history read vote wikiread wikiedit',
         state: 'GYOFB_INITIALTED',

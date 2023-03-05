@@ -17,8 +17,8 @@
         ></v-text-field>
       </v-row>
       <v-row no-gutters>
-        <v-sheet v-if="!!user">
-          <v-list-item :prepend-avatar="user?.icon_img">{{ user?.name }}</v-list-item>
+        <v-sheet v-if="!isEmpty(user)">
+          <v-list-item :prepend-avatar="user.icon_img">{{ user.name }}</v-list-item>
         </v-sheet>
         <v-sheet v-else><v-btn flat color="info" @click="loadToken()">Load User</v-btn></v-sheet>
       </v-row>
@@ -28,13 +28,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { getRedditToken, getUser } from '@/http/reddit';
+import isEmpty from 'lodash/isEmpty';
+import { getRedditToken, getRedditUser } from '@/http/reddit';
+import type { RedditUser } from '@/types/reddit';
 
 export default defineComponent({
+  setup: () => {
+    return { isEmpty };
+  },
   data: () => {
     return {
       token: '',
-      user: undefined,
+      user: {} as RedditUser,
     };
   },
   computed: {
@@ -48,11 +53,9 @@ export default defineComponent({
   methods: {
     async loadToken() {
       const data = await getRedditToken(this.code);
-      console.log(data);
       const { access_token } = data;
-      const user = await getUser(access_token);
+      const user = await getRedditUser(access_token);
       this.user = user;
-      console.log(user);
     },
   },
 });
