@@ -29,9 +29,9 @@ export default defineComponent({
   setup() {
     return {
       redditConfig: {
-        clientId: 'MwUgAW99DEm37iz2z4u3uQ',
+        clientId: import.meta.env.VITE_REDDIT_CLIENT_ID,
         responseType: 'code',
-        redirectUri: 'https://main.d398kv8yeh6ttc.amplifyapp.com/reddit/authorized',
+        redirectUri: import.meta.env.VITE_REDDIT_REDIRECT_URI,
         duration: 'permanent',
         scope: 'identity edit flair history read vote wikiread wikiedit',
         state: 'GYOFB_INITIALTED',

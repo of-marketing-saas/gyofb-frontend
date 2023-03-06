@@ -10,8 +10,25 @@ import { loadFonts } from './plugins/webfontloader';
 import { Amplify } from 'aws-amplify';
 import awsExports from './aws-exports';
 
-Amplify.configure(awsExports);
+const configureAmplify = () => {
+  const urlsIn = awsExports.oauth.redirectSignIn.split(',');
+  const urlsOut = awsExports.oauth.redirectSignOut.split(',');
+  const currentHost = location.protocol + '//' + location.host;
+  const isCurrentHost = (url: string) => url.includes(currentHost);
+  const newUrls = {
+    redirectSignIn: urlsIn.find((url) => isCurrentHost(url)),
+    redirectSignOut: urlsOut.find((url) => isCurrentHost(url)),
+  };
+  Amplify.configure({
+    ...awsExports,
+    oauth: {
+      ...awsExports.oauth,
+      ...newUrls,
+    },
+  });
+};
 
+configureAmplify();
 loadFonts();
 
 createApp(App)

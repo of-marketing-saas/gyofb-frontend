@@ -21,6 +21,10 @@ import LayoutFooter from '@/components/layout/LayoutFooter.vue';
 import LayoutAppBar from '@/components/layout/LayoutAppBar.vue';
 
 export default defineComponent({
+  setup() {
+    console.log(import.meta.env.VITE_REDDIT_CLIENT_ID);
+    return {};
+  },
   components: {
     LayoutFooter,
     LayoutAppBar,
