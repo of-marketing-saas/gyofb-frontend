@@ -1,6 +1,8 @@
 import axios from 'axios';
 import querystring from 'querystring';
 
+axios.defaults.withCredentials = true;
+
 const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Allow-Origin': '*',
