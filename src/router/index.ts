@@ -29,6 +29,28 @@ const router = createRouter({
       component: () => import('../views/reddit/AuthorizedView.vue'),
     },
     {
+      path: '/collections',
+      name: 'collections',
+      component: () => import('../views/collections/CollectionDashboard.vue'),
+    },
+    {
+      path: '/collections/:collectionId',
+      name: 'collection-view',
+      component: () => import('../views/collections/CollectionView.vue'),
+      children: [
+        {
+          path: 'edit',
+          name: 'collection-edit',
+          component: () => import('../views/collections/CollectionEdit.vue'),
+        },
+        {
+          path: 'posts',
+          name: 'collection-posts',
+          component: () => import('../views/collections/CollectionEdit.vue'),
+        },
+      ],
+    },
+    {
       path: '/:pathMatch(.*)*',
       redirect: '/',
     },

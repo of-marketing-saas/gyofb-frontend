@@ -1,6 +1,6 @@
 {
   "auth": {
-    "gyofbfrontend759e1b5e": {
+    "gyofbfrontend45678468": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -31,6 +31,7 @@
   },
   "hosting": {
     "amplifyhosting": {
+      "lastPushTimeStamp": "2023-03-08T21:53:52.270Z",
       "service": "amplifyhosting",
       "type": "cicd"
     }
@@ -51,6 +52,13 @@
           "resourceName": "amplifyhosting"
         }
       ]
+    }
+  },
+  "storage": {
+    "gyofbfrontend": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }

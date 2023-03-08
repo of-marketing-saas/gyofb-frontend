@@ -5,7 +5,9 @@
     <v-spacer></v-spacer>
     <v-menu open-on-hover>
       <template v-slot:activator="{ props }">
-        <v-btn color="info" v-bind="props">{{ user.username }}<v-icon>mdi-menu-down</v-icon></v-btn>
+        <v-btn color="info" v-bind="props"
+          >{{ user.attributes.email }}<v-icon>mdi-menu-down</v-icon></v-btn
+        >
       </template>
       <v-list density="compact" :items="items">
         <v-list-item

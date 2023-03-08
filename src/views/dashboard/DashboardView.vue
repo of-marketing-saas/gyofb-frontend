@@ -30,8 +30,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import moment from 'moment';
-export default {
+
+export default defineComponent({
   data: () => ({
     search: '',
     headers: [
@@ -194,7 +196,7 @@ export default {
       return undefined;
     },
   },
-};
+});
 </script>
 
 <style scoped></style>

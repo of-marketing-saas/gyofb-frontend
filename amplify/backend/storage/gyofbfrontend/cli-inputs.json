@@ -1,0 +1,14 @@
+{
+  "resourceName": "gyofbfrontend",
+  "policyUUID": "5d12231f",
+  "bucketName": "gyofbfrontend-medias",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
