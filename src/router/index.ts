@@ -19,9 +19,19 @@ const router = createRouter({
       component: () => import('../views/dashboard/DashboardView.vue'),
     },
     {
-      path: '/posts/new',
-      name: 'create-post',
-      component: () => import('../views/posts/CreatePost.vue'),
+      path: '/schedulers',
+      name: 'schedulers',
+      component: () => import('../views/schedulers/SchedulerDashboard.vue'),
+    },
+    {
+      path: '/schedulers/new',
+      name: 'create-scheduler',
+      component: () => import('../views/schedulers/CreateScheduler.vue'),
+    },
+    {
+      path: '/schedulers/:schedulerId',
+      name: 'scheduler-view',
+      component: () => import('../views/schedulers/SchedulerView.vue'),
     },
     {
       path: '/reddit/authorized',
@@ -44,11 +54,26 @@ const router = createRouter({
           component: () => import('../views/collections/CollectionEdit.vue'),
         },
         {
+          path: '',
+          redirect: { name: 'collection-medias' },
+          name: 'collection-home',
+        },
+        {
+          path: 'medias',
+          name: 'collection-medias',
+          component: () => import('../views/medias/CollectionMedias.vue'),
+        },
+        {
           path: 'posts',
           name: 'collection-posts',
-          component: () => import('../views/collections/CollectionEdit.vue'),
+          component: () => import('../views/posts/CollectionPosts.vue'),
         },
       ],
+    },
+    {
+      path: '/collections/:collectionId/scheduler/:postId',
+      name: 'post-view',
+      component: () => import('../views/posts/PostView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',

@@ -1,0 +1,58 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type User @model {
+  id: ID! @primaryKey
+  accountEmail: String!
+  accountId: String
+  accountName: String
+  accountAvator: String
+  accountQueryCode: String
+  subscriptionStatus: String
+  subscriptionExpiredAt: Int
+  collections: [Collection] @hasMany
+  schedulers: [Scheduler] @hasMany
+  medias: [Media] @hasMany
+  posts: [Post] @hasMany
+}
+
+type Collection @model {
+  id: ID! @primaryKey
+  name: String!
+  user: User @belongsTo
+  medias: [Media] @hasMany
+  posts: [Post] @hasMany
+  schedulers: [Scheduler] @hasMany
+}
+
+type Media @model {
+  id: ID! @primaryKey
+  name: String!
+  type: String
+  s3Key: String
+  preferred: Boolean
+  user: User @belongsTo
+  collection: Collection @belongsTo
+  posts: [Post] @hasMany
+}
+
+type Scheduler @model {
+  id: ID! @primaryKey
+  name: String!
+  startAt: AWSTimestamp
+  endAt: AWSTimestamp
+  postTarget: Int
+  subreddits: [String]
+  status: String
+  user: User @belongsTo
+  collection: Collection @belongsTo
+  posts: [Post] @hasMany
+}
+
+type Post @model {
+  id: ID! @primaryKey
+  title: String!
+  subreddit: String!
+  url: String
+}

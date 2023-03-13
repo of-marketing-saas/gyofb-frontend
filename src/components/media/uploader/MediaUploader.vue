@@ -16,6 +16,7 @@
             @update:model-value="addFiles"
             ref="file"
             style="display: none"
+            multiple
           />
           <v-btn prepend-icon="mdi-plus-thick" @click="($refs.file as any).click()" color="success">
             Select Files
@@ -32,30 +33,38 @@
 </template>
 
 <script setup lang="ts">
-import { toRefs } from 'vue';
-import DropZone from '@/components/media/DropZone.vue';
-import FilesPreview from '@/components/media/FilesPreview.vue';
-import { useAuthenticator } from '@aws-amplify/ui-vue';
+import { computed } from 'vue';
+import DropZone from '@/components/media/uploader/DropZone.vue';
+import FilesPreview from '@/components/media/uploader/FilesPreview.vue';
 
-import { useFileList } from './compositions';
+import { useFileList } from '../compositions';
+import { useRoute } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+import { useCollectionStore } from '@/stores/collections';
+import type { CreateMediaInput } from '@/API';
+
 const { files, addFiles, removeFile, uploadFile } = useFileList();
+const { createMedia } = useCollectionStore();
 
-const props = defineProps({
-  collectionId: {
-    type: String,
-    required: true,
-  },
-});
-const { collectionId } = toRefs(props);
-const { user } = toRefs(useAuthenticator());
+const route = useRoute();
+const collectionId = computed(() => route.params.collectionId as string);
+const { user } = useUserStore();
 
 const uploadFiles = () => {
-  const username = user.value?.username;
-  if (username) {
-    files.value.forEach((file) => {
-      uploadFile(username, file);
-    });
-  }
+  files.value.forEach((fileObj) => {
+    const callback = async (s3Key: string) => {
+      const { file } = fileObj;
+      const input: CreateMediaInput = {
+        userMediasId: user.id,
+        collectionMediasId: collectionId.value,
+        s3Key,
+        name: file.name,
+        type: file.type,
+      };
+      createMedia(input);
+    };
+    uploadFile(user.id, fileObj, callback);
+  });
 };
 </script>
 

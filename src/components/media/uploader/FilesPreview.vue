@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { toRefs, computed } from 'vue';
 import type { PropType } from 'vue';
-import type { UploadableFile } from './compositions';
+import type { UploadableFile } from '../compositions';
 const headers = [
   { title: 'File Preview', key: 'url', sortable: false },
   { title: 'File Name', key: 'name', sortable: false },

@@ -14,7 +14,6 @@ export const useFileList = () => {
     if (index > -1) {
       const fileToUpdate = files.value[index];
       files.value[index] = { ...fileToUpdate, ...values };
-      console.log('Updated values', values);
     }
   };
 
@@ -31,23 +30,33 @@ export const useFileList = () => {
     if (index > -1) files.value.splice(index, 1);
   };
 
-  const uploadFile = async (filePrefix: string, { id, file }: UploadableFile) => {
+  const uploadFile = async (
+    filePrefix: string,
+    { id, file }: UploadableFile,
+    callback: (s3key: string) => Promise<void>,
+  ) => {
     updateFile(id, { status: 'uploading' });
     try {
       const result = await Storage.put(`${filePrefix}/${file.name}`, file, {
         contentType: file.type,
         progressCallback: (progress) => {
           updateFile(id, { progress: progress.loaded / progress.total });
-          console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
         },
       });
       updateFile(id, { status: 'uploaded', s3Key: result.key });
+      await callback(result.key);
     } catch (error) {
       updateFile(id, { status: 'error' });
       console.error('Failed to upload file', id, error);
     }
   };
-  return { files, addFiles, removeFile, uploadFile };
+
+  const getMediaFile = async (s3Key: string) => {
+    const result = await Storage.get(s3Key);
+    return result;
+  };
+
+  return { files, addFiles, removeFile, uploadFile, getMediaFile };
 };
 
 export class UploadableFile {

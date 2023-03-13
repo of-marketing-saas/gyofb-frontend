@@ -1,0 +1,17 @@
+{
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "viteRedditClientId",
+      "environmentVariableName": "VITE_REDDIT_CLIENT_ID"
+    },
+    {
+      "cloudFormationParameterName": "viteRedditClientSecret",
+      "environmentVariableName": "VITE_REDDIT_CLIENT_SECRET"
+    },
+    {
+      "cloudFormationParameterName": "viteRedditRedirectUri",
+      "environmentVariableName": "VITE_REDDIT_REDIRECT_URI"
+    }
+  ]
+}

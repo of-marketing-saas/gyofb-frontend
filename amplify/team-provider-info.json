@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-gyofbfrontend-dev-134847-unauthRole",
       "StackName": "amplify-gyofbfrontend-dev-134847",
       "StackId": "arn:aws:cloudformation:us-west-2:330203543370:stack/amplify-gyofbfrontend-dev-134847/022bcfa0-bdfb-11ed-94e4-02cf9c08873b",
-      "AmplifyAppId": "d1muw0x0u6w5oq"
+      "AmplifyAppId": "d1muw0x0u6w5oq",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-gyofbfrontend-dev-134847-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "hosting": {
@@ -23,6 +24,19 @@
       },
       "storage": {
         "gyofbfrontend": {}
+      },
+      "function": {
+        "gyofbMiddleTier": {
+          "deploymentBucketName": "amplify-gyofbfrontend-dev-134847-deployment",
+          "s3Key": "amplify-builds/gyofbMiddleTier-514b6476314b67756535-build.zip",
+          "viteRedditClientId": "Cu9Zye8ZF9IE0vVRiI9X4w",
+          "viteRedditClientSecret": "io39RXc9TzstmCdzzFPK0IwkOYAwLw",
+          "viteRedditRedirectUri": "https://main.d1muw0x0u6w5oq.amplifyapp.com/reddit/authorized"
+        }
+      },
+      "api": {
+        "gyofbApiGateway": {},
+        "gyofbAppSync": {}
       }
     }
   }

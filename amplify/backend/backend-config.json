@@ -1,4 +1,36 @@
 {
+  "api": {
+    "gyofbApiGateway": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "gyofbMiddleTier"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "gyofbAppSync": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
   "auth": {
     "gyofbfrontend45678468": {
       "customAuth": false,
@@ -29,6 +61,13 @@
       "service": "Cognito"
     }
   },
+  "function": {
+    "gyofbMiddleTier": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
   "hosting": {
     "amplifyhosting": {
       "lastPushTimeStamp": "2023-03-08T21:53:52.270Z",
@@ -37,6 +76,46 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_gyofbMiddleTier_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "gyofbMiddleTier"
+        }
+      ]
+    },
+    "AMPLIFY_function_gyofbMiddleTier_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "gyofbMiddleTier"
+        }
+      ]
+    },
+    "AMPLIFY_function_gyofbMiddleTier_viteRedditClientId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "gyofbMiddleTier"
+        }
+      ]
+    },
+    "AMPLIFY_function_gyofbMiddleTier_viteRedditClientSecret": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "gyofbMiddleTier"
+        }
+      ]
+    },
+    "AMPLIFY_function_gyofbMiddleTier_viteRedditRedirectUri": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "gyofbMiddleTier"
+        }
+      ]
+    },
     "AMPLIFY_hosting_amplifyhosting_appId": {
       "usedBy": [
         {

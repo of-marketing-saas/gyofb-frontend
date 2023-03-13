@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "paths": {
+    "/reddit/user": {
+      "name": "/reddit/user",
+      "lambdaFunction": "gyofbMiddleTier",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    },
+    "/stripe/paymentIntent": {
+      "name": "/stripe/paymentIntent",
+      "lambdaFunction": "gyofbMiddleTier",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    },
+    "/strip/paymentConfirm": {
+      "name": "/strip/paymentConfirm",
+      "lambdaFunction": "gyofbMiddleTier",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

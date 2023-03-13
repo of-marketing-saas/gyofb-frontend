@@ -2,7 +2,7 @@
   <v-card width="100%">
     <v-card-title>Reddit Authorized</v-card-title>
     <v-container>
-      <v-row no-gutters>
+      <v-row no-gutters class="flex-nowrap mt-2">
         <v-text-field
           disabled
           density="comfortable"
@@ -16,47 +16,53 @@
           v-model="code"
         ></v-text-field>
       </v-row>
-      <v-row no-gutters>
-        <v-sheet v-if="!isEmpty(user)">
-          <v-list-item :prepend-avatar="user.icon_img">{{ user.name }}</v-list-item>
-        </v-sheet>
-        <v-sheet v-else><v-btn flat color="info" @click="loadToken()">Load User</v-btn></v-sheet>
-      </v-row>
+      <reddit-profile v-show="redditUser" :reddit-user="redditUser" />
     </v-container>
+    <v-card-actions v-show="showButton">
+      <v-spacer></v-spacer>
+      <v-btn color="info" :loading="loading" @click="onUpdateAccount()">Link User</v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import isEmpty from 'lodash/isEmpty';
-import { getRedditToken, getRedditUser } from '@/http/reddit';
-import type { RedditUser } from '@/types/reddit';
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { useRedditStore } from '@/stores/reddit';
+import { useUserStore } from '@/stores/user';
+import type { UpdateUserInput } from '@/API';
+import pick from 'lodash/pick';
+import RedditProfile from '@/components/profile/RedditProfile.vue';
 
-export default defineComponent({
-  setup: () => {
-    return { isEmpty };
-  },
-  data: () => {
-    return {
-      token: '',
-      user: {} as RedditUser,
-    };
-  },
-  computed: {
-    code(): string {
-      return this.$route.query.code as string;
-    },
-    state(): string {
-      return this.$route.query.state as string;
-    },
-  },
-  methods: {
-    async loadToken() {
-      const data = await getRedditToken(this.code);
-      const { access_token } = data;
-      const user = await getRedditUser(access_token);
-      this.user = user;
-    },
-  },
+const route = useRoute();
+const code = computed(() => route.query.code as string);
+const state = computed(() => route.query.state as string);
+
+const { redditUser, loading, loadRedditUser } = useRedditStore();
+const { user, updateAccount } = useUserStore();
+
+const showButton = ref(true);
+
+onMounted(() => {
+  loadRedditUser(code.value);
 });
+
+const onUpdateAccount = async () => {
+  const { id, name, icon_img } = redditUser;
+  const fieldsToUpdate = pick(user, [
+    'id',
+    'accountEmail',
+    'subscriptionStatus',
+    'subscriptionExpiredAt',
+  ]);
+  const input: UpdateUserInput = {
+    ...fieldsToUpdate,
+    accountId: id,
+    accountName: name,
+    accountAvator: icon_img,
+    accountQueryCode: code.value,
+  };
+  await updateAccount(input);
+  showButton.value = false;
+};
 </script>

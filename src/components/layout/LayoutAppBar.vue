@@ -1,13 +1,11 @@
 <template>
   <v-app-bar>
-    <v-app-bar-nav-icon @click.stop="() => (drawer = !drawer)"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click.stop="() => toggleDrawer()"></v-app-bar-nav-icon>
     <v-app-bar-title @click="$router.push('/')"><v-img :src="logo" width="32" /></v-app-bar-title>
     <v-spacer></v-spacer>
     <v-menu open-on-hover>
       <template v-slot:activator="{ props }">
-        <v-btn color="info" v-bind="props"
-          >{{ user.attributes.email }}<v-icon>mdi-menu-down</v-icon></v-btn
-        >
+        <v-btn color="info" v-bind="props">{{ username }}<v-icon>mdi-menu-down</v-icon></v-btn>
       </template>
       <v-list density="compact" :items="items">
         <v-list-item
@@ -21,25 +19,23 @@
       </v-list>
     </v-menu>
   </v-app-bar>
-  <layout-drawer :drawer="drawer" :on-toggle-drawer="() => (drawer = !drawer)" />
+  <layout-drawer v-model="drawer" />
 </template>
 
-<script lang="ts">
-import { defineComponent, toRefs } from 'vue';
+<script setup lang="ts">
+import { ref, toRefs, computed } from 'vue';
 import LayoutDrawer from './LayoutDrawer.vue';
 import logo from '@/assets/logo.png';
+import { useUserStore } from '@/stores/user';
 import { useAuthenticator } from '@aws-amplify/ui-vue';
 
-export default defineComponent({
-  setup() {
-    const { route, user, signOut } = toRefs(useAuthenticator());
-    return { route, user, signOut };
-  },
-  components: { LayoutDrawer },
-  data: () => ({
-    logo: logo,
-    drawer: true,
-    items: [{ title: 'Profile', icon: 'mdi-account', link: '/profile' }],
-  }),
-});
+const { signOut } = toRefs(useAuthenticator());
+const { user } = useUserStore();
+
+const username = computed(() => user.accountEmail || user.id);
+
+const drawer = ref(true);
+const items = [{ title: 'Profile', icon: 'mdi-account', link: '/profile' }];
+
+const toggleDrawer = () => (drawer.value = !drawer.value);
 </script>

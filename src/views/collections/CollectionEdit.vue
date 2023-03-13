@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import MediaUploader from '@/components/media/MediaUploader.vue';
+import MediaUploader from '@/components/media/uploader/MediaUploader.vue';
 
 const route = useRoute();
 const collectionId = computed(() => route.params.collectionId as string);

@@ -1,24 +1,16 @@
 <template>
-  <v-navigation-drawer v-model="toggleDrawer" class="d-flex">
+  <v-navigation-drawer v-model="model" class="d-flex">
     <v-sheet color="grey-lighten-4" class="pa-4">
-      <v-btn
-        @click.stop="() => $router.push('/posts/new')"
-        prepend-icon="mdi-calendar-account"
-        color="primary"
-        >Schedule a Post</v-btn
-      >
+      <v-btn prepend-icon="mdi-calendar-account" color="primary" exact to="/schedulers/new">
+        Schedule Posts
+      </v-btn>
     </v-sheet>
     <v-list class="mb-6">
-      <v-list-item
-        v-for="[icon, text, link] in links"
-        :key="icon"
-        link
-        @click.stop="() => $router.push(link)"
-      >
+      <v-list-item v-for="{ title, icon, link } in links" :key="title" :to="link" exact>
         <template v-slot:prepend>
           <v-icon>{{ icon }}</v-icon>
         </template>
-        <v-list-item-title>{{ text }}</v-list-item-title>
+        <v-list-item-title>{{ title }}</v-list-item-title>
       </v-list-item>
     </v-list>
     <v-sheet color="grey-lighten-4" class="pa-4">
@@ -27,37 +19,40 @@
   </v-navigation-drawer>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { computed } from 'vue';
+const links = [
+  {
+    title: 'Dashboard',
+    icon: 'mdi-palette-outline',
+    link: '/dashboard',
+  },
+  {
+    title: 'Collections',
+    icon: 'mdi-view-list',
+    link: '/collections',
+  },
+  {
+    title: 'Schedulers',
+    icon: 'mdi-airplane-clock',
+    link: '/schedulers',
+  },
+];
 
-export default defineComponent({
-  setup() {
-    return {};
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    default: true,
   },
-  data: () => ({
-    links: [['mdi-palette-outline', 'Dashboard', '/dashboard']],
-  }),
-  props: {
-    drawer: {
-      type: Boolean,
-      default: true,
-    },
-    onToggleDrawer: {
-      type: Function,
-      default: () => {},
-    },
+});
+const emit = defineEmits(['update:modelValue']);
+
+const model = computed({
+  get() {
+    return props.modelValue;
   },
-  computed: {
-    toggleDrawer: {
-      get() {
-        return this.drawer;
-      },
-      set() {
-        this.onToggleDrawer();
-      },
-    },
+  set(value) {
+    emit('update:modelValue', value);
   },
 });
 </script>
-
-<style scoped></style>
