@@ -1,203 +1,50 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
-  <v-card width="100%">
-    <v-card-title class="d-flex flex-row align-center">
-      Post Dashboard
-      <v-spacer></v-spacer>
-      <v-text-field
-        variant="outlined"
-        density="compact"
-        v-model="search"
-        prepend-inner-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-    </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="items"
-      :items-per-page="10"
-      item-value="name"
-      class="elevation-2"
-    >
-      <template v-slot:item.status="{ item }">
-        <v-chip :color="getStatusColor(item.raw.status)">
-          {{ item.raw.status }}
-        </v-chip>
-      </template>
-    </v-data-table>
-  </v-card>
+  <v-container class="d-flex flex-column pa-1">
+    <v-tabs v-model="tabValue" color="primary" align-tabs="start">
+      <v-tab value="post">Posts</v-tab>
+      <v-tab value="collection">Collections</v-tab>
+      <v-tab value="scheduler">Schedulers</v-tab>
+      <v-tab value="media">Medias</v-tab>
+    </v-tabs>
+    <v-window v-model="tabValue">
+      <v-window-item key="post" value="post">
+        <post-table :posts="posts"></post-table>
+      </v-window-item>
+      <v-window-item key="collection" value="collection">
+        <collection-table :collections="collections"></collection-table>
+      </v-window-item>
+      <v-window-item key="scheduler" value="scheduler">
+        <scheduler-table :schedulers="schedulers"></scheduler-table>
+      </v-window-item>
+      <v-window-item key="media" value="media">
+        <media-table :medias="medias"></media-table>
+      </v-window-item>
+    </v-window>
+  </v-container>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import moment from 'moment';
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import CollectionTable from '@/components/dashboards/CollectionTable.vue';
+import SchedulerTable from '@/components/dashboards/SchedulerTable.vue';
+import MediaTable from '@/components/dashboards/MediaTable.vue';
+import PostTable from '@/components/dashboards/PostTable.vue';
+import { useUserStore } from '@/stores/user';
+import type { Collection, Scheduler, Media, Post } from '@/API';
 
-export default defineComponent({
-  data: () => ({
-    search: '',
-    headers: [
-      {
-        title: 'Reddit Account',
-        align: 'start',
-        key: 'accountName',
-        sortable: false,
-      },
-      { title: 'Post Title', key: 'postTitle' },
-      { title: 'Created At', key: 'createdAt' },
-      { title: 'Delivery Status', key: 'status' },
-      { title: 'Start Time', key: 'startTime' },
-      { title: 'Frequency (in days)', key: 'frequency' },
-      { title: 'Recursion', key: 'recursion' },
-    ],
-    items: [
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Scheduled',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Live',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Paused',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Scheduled',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Live',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Live',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Scheduled',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Scheduled',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Scheduled',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Completed',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Completed',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Completed',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Completed',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-      {
-        accountName: 'Frozen Yogurt',
-        postTitle: "I'm a title",
-        status: 'Completed',
-        createdAt: moment().format('YYYY-MM-DD hh:mm:ss'),
-        startTime: moment('2024-01-01').format('YYYY-MM-DD hh:mm:ss'),
-        frequency: 2,
-        recursion: 10,
-      },
-    ],
-  }),
-  methods: {
-    getStatusColor(status: string) {
-      if (status === 'Scheduled') {
-        return 'secondary';
-      }
-      if (status === 'Live') {
-        return 'primary';
-      }
-      if (status === 'Paused') {
-        return 'warning';
-      }
-      if (status === 'Completed') {
-        return 'success';
-      }
-      return undefined;
-    },
+const { user } = useUserStore();
+
+const collections = computed(() => (user?.collections?.items || []) as Collection[]);
+const schedulers = computed(() => (user?.schedulers?.items || []) as Scheduler[]);
+const medias = computed(() => (user?.medias?.items || []) as Media[]);
+const posts = computed(() => (user?.posts?.items || []) as Post[]);
+
+const tab = ref('post');
+const tabValue = computed({
+  get: () => tab.value,
+  set: (value) => {
+    tab.value = value;
   },
 });
 </script>
-
-<style scoped></style>

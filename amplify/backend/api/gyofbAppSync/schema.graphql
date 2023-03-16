@@ -55,4 +55,6 @@ type Post @model {
   title: String!
   subreddit: String!
   url: String
+  media: Media @hasOne
+  scheduler: Scheduler @belongsTo
 }

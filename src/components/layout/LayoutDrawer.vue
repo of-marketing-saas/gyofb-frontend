@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-model="model" class="d-flex">
     <v-sheet color="background" class="pa-4">
-      <v-btn prepend-icon="mdi-calendar-account" color="primary" exact to="/schedulers/new">
+      <v-btn block prepend-icon="mdi-calendar-account" color="primary" exact to="/schedulers/new">
         Schedule Posts
       </v-btn>
     </v-sheet>
@@ -13,14 +13,22 @@
         <v-list-item-title>{{ title }}</v-list-item-title>
       </v-list-item>
     </v-list>
+    <quota-summary />
     <v-sheet color="background" class="pa-4">
-      <v-btn border prepend-icon="mdi-update">Subscribe</v-btn>
+      <v-tooltip location="top" text="Upgrade your plan to schedule more posts. (Continue Soon!)">
+        <template v-slot:activator="{ props }">
+          <v-btn block border color="info" prepend-icon="mdi-information" v-bind="props">
+            Upgrade Plan
+          </v-btn>
+        </template>
+      </v-tooltip>
     </v-sheet>
   </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import QuotaSummary from '../quota/QuotaSummary.vue';
 const links = [
   {
     title: 'Dashboard',

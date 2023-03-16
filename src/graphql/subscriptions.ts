@@ -65,6 +65,7 @@ export const onCreateUser = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -136,6 +137,7 @@ export const onUpdateUser = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -207,6 +209,7 @@ export const onDeleteUser = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -272,6 +275,7 @@ export const onCreateCollection = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -354,6 +358,7 @@ export const onUpdateCollection = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -436,6 +441,7 @@ export const onDeleteCollection = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -533,6 +539,7 @@ export const onCreateMedia = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -615,6 +622,7 @@ export const onUpdateMedia = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -697,6 +705,7 @@ export const onDeleteMedia = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -783,6 +792,7 @@ export const onCreateScheduler = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -869,6 +879,7 @@ export const onUpdateScheduler = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -955,6 +966,7 @@ export const onDeleteScheduler = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -972,12 +984,81 @@ export const onCreatePost = /* GraphQL */ `
       title
       subreddit
       url
+      media {
+        id
+        name
+        type
+        s3Key
+        preferred
+        user {
+          id
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
+          createdAt
+          updatedAt
+        }
+        collection {
+          id
+          name
+          createdAt
+          updatedAt
+          userCollectionsId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userMediasId
+        collectionMediasId
+      }
+      scheduler {
+        id
+        name
+        startAt
+        endAt
+        postTarget
+        subreddits
+        status
+        user {
+          id
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
+          createdAt
+          updatedAt
+        }
+        collection {
+          id
+          name
+          createdAt
+          updatedAt
+          userCollectionsId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userSchedulersId
+        collectionSchedulersId
+      }
       createdAt
       updatedAt
       userPostsId
       collectionPostsId
       mediaPostsId
       schedulerPostsId
+      postMediaId
     }
   }
 `;
@@ -988,12 +1069,81 @@ export const onUpdatePost = /* GraphQL */ `
       title
       subreddit
       url
+      media {
+        id
+        name
+        type
+        s3Key
+        preferred
+        user {
+          id
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
+          createdAt
+          updatedAt
+        }
+        collection {
+          id
+          name
+          createdAt
+          updatedAt
+          userCollectionsId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userMediasId
+        collectionMediasId
+      }
+      scheduler {
+        id
+        name
+        startAt
+        endAt
+        postTarget
+        subreddits
+        status
+        user {
+          id
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
+          createdAt
+          updatedAt
+        }
+        collection {
+          id
+          name
+          createdAt
+          updatedAt
+          userCollectionsId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userSchedulersId
+        collectionSchedulersId
+      }
       createdAt
       updatedAt
       userPostsId
       collectionPostsId
       mediaPostsId
       schedulerPostsId
+      postMediaId
     }
   }
 `;
@@ -1004,12 +1154,81 @@ export const onDeletePost = /* GraphQL */ `
       title
       subreddit
       url
+      media {
+        id
+        name
+        type
+        s3Key
+        preferred
+        user {
+          id
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
+          createdAt
+          updatedAt
+        }
+        collection {
+          id
+          name
+          createdAt
+          updatedAt
+          userCollectionsId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userMediasId
+        collectionMediasId
+      }
+      scheduler {
+        id
+        name
+        startAt
+        endAt
+        postTarget
+        subreddits
+        status
+        user {
+          id
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
+          createdAt
+          updatedAt
+        }
+        collection {
+          id
+          name
+          createdAt
+          updatedAt
+          userCollectionsId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userSchedulersId
+        collectionSchedulersId
+      }
       createdAt
       updatedAt
       userPostsId
       collectionPostsId
       mediaPostsId
       schedulerPostsId
+      postMediaId
     }
   }
 `;

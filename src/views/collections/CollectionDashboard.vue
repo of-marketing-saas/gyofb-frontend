@@ -1,43 +1,15 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
-  <v-card width="100%">
-    <v-card-title class="d-flex flex-row">
-      Collection Dashboard
-      <v-spacer></v-spacer>
-      <create-collection></create-collection>
-    </v-card-title>
-    <v-data-table
-      :headers="headers"
-      :items="collections"
-      item-value="name"
-      :loading="loading"
-      class="elevation-2"
-      fixed-header
-    >
-      <template v-slot:item.name="{ item }">
-        <v-btn variant="plain" color="info" exact :to="`/collections/${item.raw.id}`">
-          {{ item.raw.name }}
-        </v-btn>
-      </template>
-    </v-data-table>
-  </v-card>
+  <collection-table title="Collection Dashboard" :collections="collections"></collection-table>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import CreateCollection from '@/views/collections/CreateCollection.vue';
+import { computed } from 'vue';
+import CollectionTable from '@/components/dashboards/CollectionTable.vue';
 import { useUserStore } from '@/stores/user';
-import { useCollectionStore } from '@/stores/collections';
-
-const headers = [
-  { title: 'Collection Name', align: 'start', key: 'name', sortable: false },
-  { title: 'Created At', key: 'createdAt' },
-];
+import type { Collection } from '@/API';
 
 const { user } = useUserStore();
-const { collections, loading, loadCollections } = useCollectionStore();
 
-onMounted(() => loadCollections(user.id));
+const collections = computed(() => (user?.collections?.items || []) as Collection[]);
 </script>
-
-<style lang="scss" scoped></style>

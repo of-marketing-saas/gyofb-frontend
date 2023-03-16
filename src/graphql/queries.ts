@@ -65,6 +65,7 @@ export const getUser = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -171,6 +172,7 @@ export const getCollection = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -315,6 +317,7 @@ export const getMedia = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -451,6 +454,7 @@ export const getScheduler = /* GraphQL */ `
           collectionPostsId
           mediaPostsId
           schedulerPostsId
+          postMediaId
         }
         nextToken
       }
@@ -522,12 +526,81 @@ export const getPost = /* GraphQL */ `
       title
       subreddit
       url
+      media {
+        id
+        name
+        type
+        s3Key
+        preferred
+        user {
+          id
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
+          createdAt
+          updatedAt
+        }
+        collection {
+          id
+          name
+          createdAt
+          updatedAt
+          userCollectionsId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userMediasId
+        collectionMediasId
+      }
+      scheduler {
+        id
+        name
+        startAt
+        endAt
+        postTarget
+        subreddits
+        status
+        user {
+          id
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
+          createdAt
+          updatedAt
+        }
+        collection {
+          id
+          name
+          createdAt
+          updatedAt
+          userCollectionsId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userSchedulersId
+        collectionSchedulersId
+      }
       createdAt
       updatedAt
       userPostsId
       collectionPostsId
       mediaPostsId
       schedulerPostsId
+      postMediaId
     }
   }
 `;
@@ -551,12 +624,37 @@ export const listPosts = /* GraphQL */ `
         title
         subreddit
         url
+        media {
+          id
+          name
+          type
+          s3Key
+          preferred
+          createdAt
+          updatedAt
+          userMediasId
+          collectionMediasId
+        }
+        scheduler {
+          id
+          name
+          startAt
+          endAt
+          postTarget
+          subreddits
+          status
+          createdAt
+          updatedAt
+          userSchedulersId
+          collectionSchedulersId
+        }
         createdAt
         updatedAt
         userPostsId
         collectionPostsId
         mediaPostsId
         schedulerPostsId
+        postMediaId
       }
       nextToken
     }
