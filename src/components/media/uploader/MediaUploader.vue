@@ -1,7 +1,7 @@
 <template>
   <v-card width="100%">
     <v-card-title>Collection Media Uploader</v-card-title>
-    <drop-zone class="drop-zone bg-grey-lighten-1 elevation-5 mb-1" @files-dropped="addFiles">
+    <drop-zone class="elevation-5" @files-dropped="addFiles">
       <v-container>
         <v-row class="justify-center pb-2">
           <div>
@@ -67,13 +67,3 @@ const uploadFiles = () => {
   });
 };
 </script>
-
-<style scoped>
-.drop-zone {
-  width: 100%;
-  min-height: 120px;
-  margin: 0 auto;
-  padding: 30px;
-  transition: 0.2s ease;
-}
-</style>

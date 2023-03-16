@@ -1,9 +1,9 @@
 <template>
   <v-row no-gutters class="flex-nowrap">
     <v-col>
-      <v-list-item density="comfortable" :prepend-avatar="redditUser.icon_img">{{
-        redditUser.name
-      }}</v-list-item>
+      <v-list-item density="comfortable" :prepend-avatar="redditUser.icon_img">
+        {{ redditUser.name }}
+      </v-list-item>
     </v-col>
     <v-col>
       <v-text-field

@@ -5,9 +5,10 @@
       Post Dashboard
       <v-spacer></v-spacer>
       <v-text-field
-        density="comfortable"
+        variant="outlined"
+        density="compact"
         v-model="search"
-        prepend-icon="mdi-magnify"
+        prepend-inner-icon="mdi-magnify"
         label="Search"
         single-line
         hide-details

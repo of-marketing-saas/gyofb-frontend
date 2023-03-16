@@ -1,32 +1,21 @@
 <template>
   <v-template>
-    <v-row no-gutters>
-      <v-text-field
-        density="comfortable"
-        disabled
-        label="Collection Name"
-        v-model="collection.name"
-      ></v-text-field>
+    <v-row no-gutters class="flex-nowrap">
+      <control-label label="Collection Name" :title="collection.name" />
     </v-row>
-    <v-row no-gutters>
-      <v-text-field
-        density="comfortable"
-        disabled
-        label="Media Count"
-        v-model="(collection.medias?.items || []).length"
-      ></v-text-field>
-      <v-text-field
-        density="comfortable"
-        disabled
-        label="Post Count"
-        v-model="(collection.posts?.items || []).length"
-      ></v-text-field>
-      <v-text-field
-        density="comfortable"
-        disabled
+    <v-row no-gutters class="flex-nowrap">
+      <control-label
         label="Scheduler Count"
-        v-model="(collection.schedulers?.items || []).length"
-      ></v-text-field>
+        :title="(collection.schedulers?.items || []).length.toLocaleString()"
+      />
+      <control-label
+        label="Media Count"
+        :title="(collection.medias?.items || []).length.toLocaleString()"
+      />
+      <control-label
+        label="Post Count"
+        :title="(collection.posts?.items || []).length.toLocaleString()"
+      />
     </v-row>
   </v-template>
 </template>
@@ -34,6 +23,7 @@
 <script setup lang="ts">
 import type { Collection } from '@/API';
 import { toRefs, type PropType } from 'vue';
+import ControlLabel from '@/components/form/ControlLabel.vue';
 
 const props = defineProps({
   collection: {

@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer v-model="model" class="d-flex">
-    <v-sheet color="grey-lighten-4" class="pa-4">
+    <v-sheet color="background" class="pa-4">
       <v-btn prepend-icon="mdi-calendar-account" color="primary" exact to="/schedulers/new">
         Schedule Posts
       </v-btn>
@@ -13,7 +13,7 @@
         <v-list-item-title>{{ title }}</v-list-item-title>
       </v-list-item>
     </v-list>
-    <v-sheet color="grey-lighten-4" class="pa-4">
+    <v-sheet color="background" class="pa-4">
       <v-btn border prepend-icon="mdi-update">Subscribe</v-btn>
     </v-sheet>
   </v-navigation-drawer>

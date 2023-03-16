@@ -6,7 +6,12 @@
     <v-card>
       <v-card-title>Create New Collection</v-card-title>
       <v-card-text>
-        <v-text-field density="comfortable" label="Collection Name" v-model="name"></v-text-field>
+        <v-text-field
+          clearable
+          density="comfortable"
+          label="Collection Name"
+          v-model="name"
+        ></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>

@@ -28,7 +28,7 @@
             variant="outlined"
             density="comfortable"
             label="Scheduler status"
-            disabled
+            readonly
             :model-value="scheduler.status"
           ></v-text-field>
         </v-col>
@@ -85,7 +85,7 @@
             label="Subreddits"
             v-model="scheduler.subreddits"
             :items="subreddits"
-            prepend-icon="mdi-reddit"
+            prepend-inner-icon="mdi-reddit"
             closable-chips
             chips
             item-title="name"
@@ -119,9 +119,9 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn variant="flat" :loading="loading" color="primary" @click="onCreateScheduler()"
-        >Schedule</v-btn
-      >
+      <v-btn variant="flat" :loading="loading" color="primary" @click="onCreateScheduler()">
+        Schedule
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>

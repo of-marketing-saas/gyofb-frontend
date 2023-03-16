@@ -10,6 +10,9 @@
       <template v-slot:item.s3Key="{ item }">
         <media-avatar :media="item.raw" />
       </template>
+      <template v-slot:item.createdAt="{ item }">
+        {{ dateTimeFromISOString(item.raw.createdAt) }}
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -20,6 +23,7 @@ import { useCollectionStore } from '@/stores/collections';
 import MediaAvatar from '@/components/media/MediaAvatar.vue';
 import MediasPreview from './MediasPreview.vue';
 import type { Media } from '@/API';
+import { dateTimeFromISOString } from '@/helpers/dateTimeHelper';
 
 const headers = [
   { title: 'Media Preview', key: 's3Key', sortable: false },

@@ -12,6 +12,7 @@
       item-value="name"
       :loading="loading"
       class="elevation-2"
+      fixed-header
     >
       <template v-slot:item.name="{ item }">
         <v-btn variant="plain" color="info" exact :to="`/collections/${item.raw.id}`">

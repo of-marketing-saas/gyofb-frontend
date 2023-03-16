@@ -1,10 +1,11 @@
 <template>
   <div
+    :bg-color="'red'"
     :class="className"
     :data-active="active"
     @dragenter.prevent="setActive"
-    @dragover.prevent="setActive"
-    @dragleave.prevent="setInactive"
+    @dragover.prevent="onOver"
+    @dragleave.prevent="onLeave"
     @drop.prevent="onDrop"
   >
     <slot :dropZoneActive="active"></slot>
@@ -22,10 +23,12 @@ const props = defineProps({
 });
 const emit = defineEmits(['files-dropped']);
 
-// Computed props
-const className = computed(() => `drop-zone ${props.className}`);
-
 const active = ref(false);
+const backgroundColorClass = ref('bg-grey-lighten-3');
+
+// Computed props
+const className = computed(() => `drop-zone ${backgroundColorClass.value} ${props.className}`);
+
 let inActiveTimeout: ReturnType<typeof setTimeout>;
 // setActive and setInactive use timeouts, so that when you drag an item over a child element,
 // the dragleave event that is fired won't cause a flicker. A few ms should be plenty of
@@ -41,12 +44,24 @@ const setInactive = () => {
 };
 const onDrop = (e: DragEvent): any => {
   setInactive();
-  emit('files-dropped', [...(e.dataTransfer?.files || [])]);
+  const files = [...(e.dataTransfer?.files || [])].filter((file: File) =>
+    file.type.startsWith('image/'),
+  );
+  emit('files-dropped', files);
+  backgroundColorClass.value = 'bg-grey-lighten-3';
+};
+const onOver = (e: DragEvent): any => {
+  e.preventDefault();
+  setActive();
+  backgroundColorClass.value = 'bg-grey-lighten-1';
+};
+const onLeave = (e: DragEvent): any => {
+  e.preventDefault();
+  setInactive();
+  backgroundColorClass.value = 'bg-grey-lighten-3';
 };
 
-const preventDefaults = (e: Event): any => {
-  e.preventDefault();
-};
+const preventDefaults = (e: Event): any => e.preventDefault();
 const events: string[] = ['dragenter', 'dragover', 'dragleave', 'drop'];
 
 onMounted(() => {
@@ -61,3 +76,13 @@ onUnmounted(() => {
   });
 });
 </script>
+
+<style scoped>
+.drop-zone {
+  width: 100%;
+  min-height: 200px;
+  margin: 0 auto;
+  padding: 30px;
+  transition: 0.2s ease;
+}
+</style>

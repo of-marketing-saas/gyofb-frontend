@@ -13,6 +13,13 @@
           <v-chip>{{ subreddit }}</v-chip>
         </v-chip-group>
       </template>
+      <template v-slot:item.startAt="{ item }">
+        {{ dateTimeFromSeconds(item.raw.startAt) }}
+      </template>
+      <template v-slot:item.endAt="{ item }"> {{ dateTimeFromSeconds(item.raw.endAt) }} </template>
+      <template v-slot:item.createdAt="{ item }">
+        {{ dateTimeFromISOString(item.raw.createdAt) }}
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -21,6 +28,7 @@
 import { computed } from 'vue';
 import { useUserStore } from '@/stores/user';
 import type { Scheduler } from '@/API';
+import { dateTimeFromSeconds, dateTimeFromISOString } from '@/helpers/dateTimeHelper';
 
 const headers = [
   { title: 'Name', key: 'name', sortable: false },
