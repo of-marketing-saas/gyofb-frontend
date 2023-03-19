@@ -88,31 +88,32 @@ export type User = {
   accountQueryCode?: string | null,
   subscriptionStatus?: string | null,
   subscriptionExpiredAt?: number | null,
-  collections?: ModelCollectionConnection | null,
-  schedulers?: ModelSchedulerConnection | null,
+  collections?: ModelMediaCollectionConnection | null,
+  schedules?: ModelPostingScheduleConnection | null,
   medias?: ModelMediaConnection | null,
   posts?: ModelPostConnection | null,
   createdAt: string,
   updatedAt: string,
 };
 
-export type ModelCollectionConnection = {
-  __typename: "ModelCollectionConnection",
-  items:  Array<Collection | null >,
+export type ModelMediaCollectionConnection = {
+  __typename: "ModelMediaCollectionConnection",
+  items:  Array<MediaCollection | null >,
   nextToken?: string | null,
 };
 
-export type Collection = {
-  __typename: "Collection",
+export type MediaCollection = {
+  __typename: "MediaCollection",
   id: string,
   name: string,
   user?: User | null,
   medias?: ModelMediaConnection | null,
   posts?: ModelPostConnection | null,
-  schedulers?: ModelSchedulerConnection | null,
+  schedule?: PostingSchedule | null,
   createdAt: string,
   updatedAt: string,
   userCollectionsId?: string | null,
+  mediaCollectionScheduleId?: string | null,
 };
 
 export type ModelMediaConnection = {
@@ -129,12 +130,12 @@ export type Media = {
   s3Key?: string | null,
   preferred?: boolean | null,
   user?: User | null,
-  collection?: Collection | null,
+  collection?: MediaCollection | null,
   posts?: ModelPostConnection | null,
   createdAt: string,
   updatedAt: string,
   userMediasId?: string | null,
-  collectionMediasId?: string | null,
+  mediaCollectionMediasId?: string | null,
 };
 
 export type ModelPostConnection = {
@@ -150,18 +151,18 @@ export type Post = {
   subreddit: string,
   url?: string | null,
   media?: Media | null,
-  scheduler?: Scheduler | null,
+  schedule?: PostingSchedule | null,
   createdAt: string,
   updatedAt: string,
   userPostsId?: string | null,
-  collectionPostsId?: string | null,
+  mediaCollectionPostsId?: string | null,
   mediaPostsId?: string | null,
-  schedulerPostsId?: string | null,
+  postingSchedulePostsId?: string | null,
   postMediaId?: string | null,
 };
 
-export type Scheduler = {
-  __typename: "Scheduler",
+export type PostingSchedule = {
+  __typename: "PostingSchedule",
   id: string,
   name: string,
   startAt?: number | null,
@@ -170,17 +171,17 @@ export type Scheduler = {
   subreddits?: Array< string | null > | null,
   status?: string | null,
   user?: User | null,
-  collection?: Collection | null,
+  collection?: MediaCollection | null,
   posts?: ModelPostConnection | null,
   createdAt: string,
   updatedAt: string,
-  userSchedulersId?: string | null,
-  collectionSchedulersId?: string | null,
+  userSchedulesId?: string | null,
+  postingScheduleCollectionId?: string | null,
 };
 
-export type ModelSchedulerConnection = {
-  __typename: "ModelSchedulerConnection",
-  items:  Array<Scheduler | null >,
+export type ModelPostingScheduleConnection = {
+  __typename: "ModelPostingScheduleConnection",
+  items:  Array<PostingSchedule | null >,
   nextToken?: string | null,
 };
 
@@ -199,18 +200,20 @@ export type DeleteUserInput = {
   id: string,
 };
 
-export type CreateCollectionInput = {
+export type CreateMediaCollectionInput = {
   id?: string | null,
   name: string,
   userCollectionsId?: string | null,
+  mediaCollectionScheduleId?: string | null,
 };
 
-export type ModelCollectionConditionInput = {
+export type ModelMediaCollectionConditionInput = {
   name?: ModelStringInput | null,
-  and?: Array< ModelCollectionConditionInput | null > | null,
-  or?: Array< ModelCollectionConditionInput | null > | null,
-  not?: ModelCollectionConditionInput | null,
+  and?: Array< ModelMediaCollectionConditionInput | null > | null,
+  or?: Array< ModelMediaCollectionConditionInput | null > | null,
+  not?: ModelMediaCollectionConditionInput | null,
   userCollectionsId?: ModelIDInput | null,
+  mediaCollectionScheduleId?: ModelIDInput | null,
 };
 
 export type ModelIDInput = {
@@ -229,13 +232,14 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type UpdateCollectionInput = {
+export type UpdateMediaCollectionInput = {
   id: string,
   name?: string | null,
   userCollectionsId?: string | null,
+  mediaCollectionScheduleId?: string | null,
 };
 
-export type DeleteCollectionInput = {
+export type DeleteMediaCollectionInput = {
   id: string,
 };
 
@@ -246,7 +250,7 @@ export type CreateMediaInput = {
   s3Key?: string | null,
   preferred?: boolean | null,
   userMediasId?: string | null,
-  collectionMediasId?: string | null,
+  mediaCollectionMediasId?: string | null,
 };
 
 export type ModelMediaConditionInput = {
@@ -258,7 +262,7 @@ export type ModelMediaConditionInput = {
   or?: Array< ModelMediaConditionInput | null > | null,
   not?: ModelMediaConditionInput | null,
   userMediasId?: ModelIDInput | null,
-  collectionMediasId?: ModelIDInput | null,
+  mediaCollectionMediasId?: ModelIDInput | null,
 };
 
 export type ModelBooleanInput = {
@@ -275,14 +279,14 @@ export type UpdateMediaInput = {
   s3Key?: string | null,
   preferred?: boolean | null,
   userMediasId?: string | null,
-  collectionMediasId?: string | null,
+  mediaCollectionMediasId?: string | null,
 };
 
 export type DeleteMediaInput = {
   id: string,
 };
 
-export type CreateSchedulerInput = {
+export type CreatePostingScheduleInput = {
   id?: string | null,
   name: string,
   startAt?: number | null,
@@ -290,25 +294,25 @@ export type CreateSchedulerInput = {
   postTarget?: number | null,
   subreddits?: Array< string | null > | null,
   status?: string | null,
-  userSchedulersId?: string | null,
-  collectionSchedulersId?: string | null,
+  userSchedulesId?: string | null,
+  postingScheduleCollectionId?: string | null,
 };
 
-export type ModelSchedulerConditionInput = {
+export type ModelPostingScheduleConditionInput = {
   name?: ModelStringInput | null,
   startAt?: ModelIntInput | null,
   endAt?: ModelIntInput | null,
   postTarget?: ModelIntInput | null,
   subreddits?: ModelStringInput | null,
   status?: ModelStringInput | null,
-  and?: Array< ModelSchedulerConditionInput | null > | null,
-  or?: Array< ModelSchedulerConditionInput | null > | null,
-  not?: ModelSchedulerConditionInput | null,
-  userSchedulersId?: ModelIDInput | null,
-  collectionSchedulersId?: ModelIDInput | null,
+  and?: Array< ModelPostingScheduleConditionInput | null > | null,
+  or?: Array< ModelPostingScheduleConditionInput | null > | null,
+  not?: ModelPostingScheduleConditionInput | null,
+  userSchedulesId?: ModelIDInput | null,
+  postingScheduleCollectionId?: ModelIDInput | null,
 };
 
-export type UpdateSchedulerInput = {
+export type UpdatePostingScheduleInput = {
   id: string,
   name?: string | null,
   startAt?: number | null,
@@ -316,11 +320,11 @@ export type UpdateSchedulerInput = {
   postTarget?: number | null,
   subreddits?: Array< string | null > | null,
   status?: string | null,
-  userSchedulersId?: string | null,
-  collectionSchedulersId?: string | null,
+  userSchedulesId?: string | null,
+  postingScheduleCollectionId?: string | null,
 };
 
-export type DeleteSchedulerInput = {
+export type DeletePostingScheduleInput = {
   id: string,
 };
 
@@ -330,9 +334,9 @@ export type CreatePostInput = {
   subreddit: string,
   url?: string | null,
   userPostsId?: string | null,
-  collectionPostsId?: string | null,
+  mediaCollectionPostsId?: string | null,
   mediaPostsId?: string | null,
-  schedulerPostsId?: string | null,
+  postingSchedulePostsId?: string | null,
   postMediaId?: string | null,
 };
 
@@ -344,9 +348,9 @@ export type ModelPostConditionInput = {
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
   userPostsId?: ModelIDInput | null,
-  collectionPostsId?: ModelIDInput | null,
+  mediaCollectionPostsId?: ModelIDInput | null,
   mediaPostsId?: ModelIDInput | null,
-  schedulerPostsId?: ModelIDInput | null,
+  postingSchedulePostsId?: ModelIDInput | null,
   postMediaId?: ModelIDInput | null,
 };
 
@@ -356,9 +360,9 @@ export type UpdatePostInput = {
   subreddit?: string | null,
   url?: string | null,
   userPostsId?: string | null,
-  collectionPostsId?: string | null,
+  mediaCollectionPostsId?: string | null,
   mediaPostsId?: string | null,
-  schedulerPostsId?: string | null,
+  postingSchedulePostsId?: string | null,
   postMediaId?: string | null,
 };
 
@@ -392,13 +396,14 @@ export type ModelUserConnection = {
   nextToken?: string | null,
 };
 
-export type ModelCollectionFilterInput = {
+export type ModelMediaCollectionFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
-  and?: Array< ModelCollectionFilterInput | null > | null,
-  or?: Array< ModelCollectionFilterInput | null > | null,
-  not?: ModelCollectionFilterInput | null,
+  and?: Array< ModelMediaCollectionFilterInput | null > | null,
+  or?: Array< ModelMediaCollectionFilterInput | null > | null,
+  not?: ModelMediaCollectionFilterInput | null,
   userCollectionsId?: ModelIDInput | null,
+  mediaCollectionScheduleId?: ModelIDInput | null,
 };
 
 export type ModelMediaFilterInput = {
@@ -411,10 +416,10 @@ export type ModelMediaFilterInput = {
   or?: Array< ModelMediaFilterInput | null > | null,
   not?: ModelMediaFilterInput | null,
   userMediasId?: ModelIDInput | null,
-  collectionMediasId?: ModelIDInput | null,
+  mediaCollectionMediasId?: ModelIDInput | null,
 };
 
-export type ModelSchedulerFilterInput = {
+export type ModelPostingScheduleFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
   startAt?: ModelIntInput | null,
@@ -422,11 +427,11 @@ export type ModelSchedulerFilterInput = {
   postTarget?: ModelIntInput | null,
   subreddits?: ModelStringInput | null,
   status?: ModelStringInput | null,
-  and?: Array< ModelSchedulerFilterInput | null > | null,
-  or?: Array< ModelSchedulerFilterInput | null > | null,
-  not?: ModelSchedulerFilterInput | null,
-  userSchedulersId?: ModelIDInput | null,
-  collectionSchedulersId?: ModelIDInput | null,
+  and?: Array< ModelPostingScheduleFilterInput | null > | null,
+  or?: Array< ModelPostingScheduleFilterInput | null > | null,
+  not?: ModelPostingScheduleFilterInput | null,
+  userSchedulesId?: ModelIDInput | null,
+  postingScheduleCollectionId?: ModelIDInput | null,
 };
 
 export type ModelPostFilterInput = {
@@ -438,9 +443,9 @@ export type ModelPostFilterInput = {
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
   userPostsId?: ModelIDInput | null,
-  collectionPostsId?: ModelIDInput | null,
+  mediaCollectionPostsId?: ModelIDInput | null,
   mediaPostsId?: ModelIDInput | null,
-  schedulerPostsId?: ModelIDInput | null,
+  postingSchedulePostsId?: ModelIDInput | null,
   postMediaId?: ModelIDInput | null,
 };
 
@@ -499,11 +504,11 @@ export type ModelSubscriptionIntInput = {
   notIn?: Array< number | null > | null,
 };
 
-export type ModelSubscriptionCollectionFilterInput = {
+export type ModelSubscriptionMediaCollectionFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionCollectionFilterInput | null > | null,
-  or?: Array< ModelSubscriptionCollectionFilterInput | null > | null,
+  and?: Array< ModelSubscriptionMediaCollectionFilterInput | null > | null,
+  or?: Array< ModelSubscriptionMediaCollectionFilterInput | null > | null,
 };
 
 export type ModelSubscriptionMediaFilterInput = {
@@ -521,7 +526,7 @@ export type ModelSubscriptionBooleanInput = {
   eq?: boolean | null,
 };
 
-export type ModelSubscriptionSchedulerFilterInput = {
+export type ModelSubscriptionPostingScheduleFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   startAt?: ModelSubscriptionIntInput | null,
@@ -529,8 +534,8 @@ export type ModelSubscriptionSchedulerFilterInput = {
   postTarget?: ModelSubscriptionIntInput | null,
   subreddits?: ModelSubscriptionStringInput | null,
   status?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionSchedulerFilterInput | null > | null,
-  or?: Array< ModelSubscriptionSchedulerFilterInput | null > | null,
+  and?: Array< ModelSubscriptionPostingScheduleFilterInput | null > | null,
+  or?: Array< ModelSubscriptionPostingScheduleFilterInput | null > | null,
 };
 
 export type ModelSubscriptionPostFilterInput = {
@@ -559,21 +564,22 @@ export type CreateUserMutation = {
     subscriptionStatus?: string | null,
     subscriptionExpiredAt?: number | null,
     collections?:  {
-      __typename: "ModelCollectionConnection",
+      __typename: "ModelMediaCollectionConnection",
       items:  Array< {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
+    schedules?:  {
+      __typename: "ModelPostingScheduleConnection",
       items:  Array< {
-        __typename: "Scheduler",
+        __typename: "PostingSchedule",
         id: string,
         name: string,
         startAt?: number | null,
@@ -583,8 +589,8 @@ export type CreateUserMutation = {
         status?: string | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -600,7 +606,7 @@ export type CreateUserMutation = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -615,9 +621,9 @@ export type CreateUserMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -644,21 +650,22 @@ export type UpdateUserMutation = {
     subscriptionStatus?: string | null,
     subscriptionExpiredAt?: number | null,
     collections?:  {
-      __typename: "ModelCollectionConnection",
+      __typename: "ModelMediaCollectionConnection",
       items:  Array< {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
+    schedules?:  {
+      __typename: "ModelPostingScheduleConnection",
       items:  Array< {
-        __typename: "Scheduler",
+        __typename: "PostingSchedule",
         id: string,
         name: string,
         startAt?: number | null,
@@ -668,8 +675,8 @@ export type UpdateUserMutation = {
         status?: string | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -685,7 +692,7 @@ export type UpdateUserMutation = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -700,9 +707,9 @@ export type UpdateUserMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -729,21 +736,22 @@ export type DeleteUserMutation = {
     subscriptionStatus?: string | null,
     subscriptionExpiredAt?: number | null,
     collections?:  {
-      __typename: "ModelCollectionConnection",
+      __typename: "ModelMediaCollectionConnection",
       items:  Array< {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
+    schedules?:  {
+      __typename: "ModelPostingScheduleConnection",
       items:  Array< {
-        __typename: "Scheduler",
+        __typename: "PostingSchedule",
         id: string,
         name: string,
         startAt?: number | null,
@@ -753,8 +761,8 @@ export type DeleteUserMutation = {
         status?: string | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -770,7 +778,7 @@ export type DeleteUserMutation = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -785,9 +793,9 @@ export type DeleteUserMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -797,14 +805,14 @@ export type DeleteUserMutation = {
   } | null,
 };
 
-export type CreateCollectionMutationVariables = {
-  input: CreateCollectionInput,
-  condition?: ModelCollectionConditionInput | null,
+export type CreateMediaCollectionMutationVariables = {
+  input: CreateMediaCollectionInput,
+  condition?: ModelMediaCollectionConditionInput | null,
 };
 
-export type CreateCollectionMutation = {
-  createCollection?:  {
-    __typename: "Collection",
+export type CreateMediaCollectionMutation = {
+  createMediaCollection?:  {
+    __typename: "MediaCollection",
     id: string,
     name: string,
     user?:  {
@@ -818,11 +826,11 @@ export type CreateCollectionMutation = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -848,7 +856,7 @@ export type CreateCollectionMutation = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -863,45 +871,68 @@ export type CreateCollectionMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
-      items:  Array< {
-        __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
+      id: string,
+      name: string,
+      startAt?: number | null,
+      endAt?: number | null,
+      postTarget?: number | null,
+      subreddits?: Array< string | null > | null,
+      status?: string | null,
+      user?:  {
+        __typename: "User",
         id: string,
-        name: string,
-        startAt?: number | null,
-        endAt?: number | null,
-        postTarget?: number | null,
-        subreddits?: Array< string | null > | null,
-        status?: string | null,
+        accountEmail: string,
+        accountId?: string | null,
+        accountName?: string | null,
+        accountAvator?: string | null,
+        accountQueryCode?: string | null,
+        subscriptionStatus?: string | null,
+        subscriptionExpiredAt?: number | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      collection?:  {
+        __typename: "MediaCollection",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+        userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
+      } | null,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userCollectionsId?: string | null,
+    mediaCollectionScheduleId?: string | null,
   } | null,
 };
 
-export type UpdateCollectionMutationVariables = {
-  input: UpdateCollectionInput,
-  condition?: ModelCollectionConditionInput | null,
+export type UpdateMediaCollectionMutationVariables = {
+  input: UpdateMediaCollectionInput,
+  condition?: ModelMediaCollectionConditionInput | null,
 };
 
-export type UpdateCollectionMutation = {
-  updateCollection?:  {
-    __typename: "Collection",
+export type UpdateMediaCollectionMutation = {
+  updateMediaCollection?:  {
+    __typename: "MediaCollection",
     id: string,
     name: string,
     user?:  {
@@ -915,11 +946,11 @@ export type UpdateCollectionMutation = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -945,7 +976,7 @@ export type UpdateCollectionMutation = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -960,45 +991,68 @@ export type UpdateCollectionMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
-      items:  Array< {
-        __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
+      id: string,
+      name: string,
+      startAt?: number | null,
+      endAt?: number | null,
+      postTarget?: number | null,
+      subreddits?: Array< string | null > | null,
+      status?: string | null,
+      user?:  {
+        __typename: "User",
         id: string,
-        name: string,
-        startAt?: number | null,
-        endAt?: number | null,
-        postTarget?: number | null,
-        subreddits?: Array< string | null > | null,
-        status?: string | null,
+        accountEmail: string,
+        accountId?: string | null,
+        accountName?: string | null,
+        accountAvator?: string | null,
+        accountQueryCode?: string | null,
+        subscriptionStatus?: string | null,
+        subscriptionExpiredAt?: number | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      collection?:  {
+        __typename: "MediaCollection",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+        userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
+      } | null,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userCollectionsId?: string | null,
+    mediaCollectionScheduleId?: string | null,
   } | null,
 };
 
-export type DeleteCollectionMutationVariables = {
-  input: DeleteCollectionInput,
-  condition?: ModelCollectionConditionInput | null,
+export type DeleteMediaCollectionMutationVariables = {
+  input: DeleteMediaCollectionInput,
+  condition?: ModelMediaCollectionConditionInput | null,
 };
 
-export type DeleteCollectionMutation = {
-  deleteCollection?:  {
-    __typename: "Collection",
+export type DeleteMediaCollectionMutation = {
+  deleteMediaCollection?:  {
+    __typename: "MediaCollection",
     id: string,
     name: string,
     user?:  {
@@ -1012,11 +1066,11 @@ export type DeleteCollectionMutation = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -1042,7 +1096,7 @@ export type DeleteCollectionMutation = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1057,34 +1111,57 @@ export type DeleteCollectionMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
-      items:  Array< {
-        __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
+      id: string,
+      name: string,
+      startAt?: number | null,
+      endAt?: number | null,
+      postTarget?: number | null,
+      subreddits?: Array< string | null > | null,
+      status?: string | null,
+      user?:  {
+        __typename: "User",
         id: string,
-        name: string,
-        startAt?: number | null,
-        endAt?: number | null,
-        postTarget?: number | null,
-        subreddits?: Array< string | null > | null,
-        status?: string | null,
+        accountEmail: string,
+        accountId?: string | null,
+        accountName?: string | null,
+        accountAvator?: string | null,
+        accountQueryCode?: string | null,
+        subscriptionStatus?: string | null,
+        subscriptionExpiredAt?: number | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      collection?:  {
+        __typename: "MediaCollection",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+        userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
+      } | null,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userCollectionsId?: string | null,
+    mediaCollectionScheduleId?: string | null,
   } | null,
 };
 
@@ -1112,11 +1189,11 @@ export type CreateMediaMutation = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -1131,7 +1208,7 @@ export type CreateMediaMutation = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -1155,13 +1232,24 @@ export type CreateMediaMutation = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1174,9 +1262,9 @@ export type CreateMediaMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1184,7 +1272,7 @@ export type CreateMediaMutation = {
     createdAt: string,
     updatedAt: string,
     userMediasId?: string | null,
-    collectionMediasId?: string | null,
+    mediaCollectionMediasId?: string | null,
   } | null,
 };
 
@@ -1212,11 +1300,11 @@ export type UpdateMediaMutation = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -1231,7 +1319,7 @@ export type UpdateMediaMutation = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -1255,13 +1343,24 @@ export type UpdateMediaMutation = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1274,9 +1373,9 @@ export type UpdateMediaMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1284,7 +1383,7 @@ export type UpdateMediaMutation = {
     createdAt: string,
     updatedAt: string,
     userMediasId?: string | null,
-    collectionMediasId?: string | null,
+    mediaCollectionMediasId?: string | null,
   } | null,
 };
 
@@ -1312,11 +1411,11 @@ export type DeleteMediaMutation = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -1331,7 +1430,7 @@ export type DeleteMediaMutation = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -1355,13 +1454,24 @@ export type DeleteMediaMutation = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1374,9 +1484,9 @@ export type DeleteMediaMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1384,18 +1494,18 @@ export type DeleteMediaMutation = {
     createdAt: string,
     updatedAt: string,
     userMediasId?: string | null,
-    collectionMediasId?: string | null,
+    mediaCollectionMediasId?: string | null,
   } | null,
 };
 
-export type CreateSchedulerMutationVariables = {
-  input: CreateSchedulerInput,
-  condition?: ModelSchedulerConditionInput | null,
+export type CreatePostingScheduleMutationVariables = {
+  input: CreatePostingScheduleInput,
+  condition?: ModelPostingScheduleConditionInput | null,
 };
 
-export type CreateSchedulerMutation = {
-  createScheduler?:  {
-    __typename: "Scheduler",
+export type CreatePostingScheduleMutation = {
+  createPostingSchedule?:  {
+    __typename: "PostingSchedule",
     id: string,
     name: string,
     startAt?: number | null,
@@ -1414,11 +1524,11 @@ export type CreateSchedulerMutation = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -1433,7 +1543,7 @@ export type CreateSchedulerMutation = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -1457,13 +1567,24 @@ export type CreateSchedulerMutation = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1476,28 +1597,28 @@ export type CreateSchedulerMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    userSchedulersId?: string | null,
-    collectionSchedulersId?: string | null,
+    userSchedulesId?: string | null,
+    postingScheduleCollectionId?: string | null,
   } | null,
 };
 
-export type UpdateSchedulerMutationVariables = {
-  input: UpdateSchedulerInput,
-  condition?: ModelSchedulerConditionInput | null,
+export type UpdatePostingScheduleMutationVariables = {
+  input: UpdatePostingScheduleInput,
+  condition?: ModelPostingScheduleConditionInput | null,
 };
 
-export type UpdateSchedulerMutation = {
-  updateScheduler?:  {
-    __typename: "Scheduler",
+export type UpdatePostingScheduleMutation = {
+  updatePostingSchedule?:  {
+    __typename: "PostingSchedule",
     id: string,
     name: string,
     startAt?: number | null,
@@ -1516,11 +1637,11 @@ export type UpdateSchedulerMutation = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -1535,7 +1656,7 @@ export type UpdateSchedulerMutation = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -1559,13 +1680,24 @@ export type UpdateSchedulerMutation = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1578,28 +1710,28 @@ export type UpdateSchedulerMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    userSchedulersId?: string | null,
-    collectionSchedulersId?: string | null,
+    userSchedulesId?: string | null,
+    postingScheduleCollectionId?: string | null,
   } | null,
 };
 
-export type DeleteSchedulerMutationVariables = {
-  input: DeleteSchedulerInput,
-  condition?: ModelSchedulerConditionInput | null,
+export type DeletePostingScheduleMutationVariables = {
+  input: DeletePostingScheduleInput,
+  condition?: ModelPostingScheduleConditionInput | null,
 };
 
-export type DeleteSchedulerMutation = {
-  deleteScheduler?:  {
-    __typename: "Scheduler",
+export type DeletePostingScheduleMutation = {
+  deletePostingSchedule?:  {
+    __typename: "PostingSchedule",
     id: string,
     name: string,
     startAt?: number | null,
@@ -1618,11 +1750,11 @@ export type DeleteSchedulerMutation = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -1637,7 +1769,7 @@ export type DeleteSchedulerMutation = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -1661,13 +1793,24 @@ export type DeleteSchedulerMutation = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -1680,17 +1823,17 @@ export type DeleteSchedulerMutation = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    userSchedulersId?: string | null,
-    collectionSchedulersId?: string | null,
+    userSchedulesId?: string | null,
+    postingScheduleCollectionId?: string | null,
   } | null,
 };
 
@@ -1727,12 +1870,13 @@ export type CreatePostMutation = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1741,10 +1885,10 @@ export type CreatePostMutation = {
       createdAt: string,
       updatedAt: string,
       userMediasId?: string | null,
-      collectionMediasId?: string | null,
+      mediaCollectionMediasId?: string | null,
     } | null,
-    scheduler?:  {
-      __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
       id: string,
       name: string,
       startAt?: number | null,
@@ -1766,12 +1910,13 @@ export type CreatePostMutation = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1779,15 +1924,15 @@ export type CreatePostMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      userSchedulersId?: string | null,
-      collectionSchedulersId?: string | null,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userPostsId?: string | null,
-    collectionPostsId?: string | null,
+    mediaCollectionPostsId?: string | null,
     mediaPostsId?: string | null,
-    schedulerPostsId?: string | null,
+    postingSchedulePostsId?: string | null,
     postMediaId?: string | null,
   } | null,
 };
@@ -1825,12 +1970,13 @@ export type UpdatePostMutation = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1839,10 +1985,10 @@ export type UpdatePostMutation = {
       createdAt: string,
       updatedAt: string,
       userMediasId?: string | null,
-      collectionMediasId?: string | null,
+      mediaCollectionMediasId?: string | null,
     } | null,
-    scheduler?:  {
-      __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
       id: string,
       name: string,
       startAt?: number | null,
@@ -1864,12 +2010,13 @@ export type UpdatePostMutation = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1877,15 +2024,15 @@ export type UpdatePostMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      userSchedulersId?: string | null,
-      collectionSchedulersId?: string | null,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userPostsId?: string | null,
-    collectionPostsId?: string | null,
+    mediaCollectionPostsId?: string | null,
     mediaPostsId?: string | null,
-    schedulerPostsId?: string | null,
+    postingSchedulePostsId?: string | null,
     postMediaId?: string | null,
   } | null,
 };
@@ -1923,12 +2070,13 @@ export type DeletePostMutation = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1937,10 +2085,10 @@ export type DeletePostMutation = {
       createdAt: string,
       updatedAt: string,
       userMediasId?: string | null,
-      collectionMediasId?: string | null,
+      mediaCollectionMediasId?: string | null,
     } | null,
-    scheduler?:  {
-      __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
       id: string,
       name: string,
       startAt?: number | null,
@@ -1962,12 +2110,13 @@ export type DeletePostMutation = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -1975,15 +2124,15 @@ export type DeletePostMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      userSchedulersId?: string | null,
-      collectionSchedulersId?: string | null,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userPostsId?: string | null,
-    collectionPostsId?: string | null,
+    mediaCollectionPostsId?: string | null,
     mediaPostsId?: string | null,
-    schedulerPostsId?: string | null,
+    postingSchedulePostsId?: string | null,
     postMediaId?: string | null,
   } | null,
 };
@@ -2004,21 +2153,22 @@ export type GetUserQuery = {
     subscriptionStatus?: string | null,
     subscriptionExpiredAt?: number | null,
     collections?:  {
-      __typename: "ModelCollectionConnection",
+      __typename: "ModelMediaCollectionConnection",
       items:  Array< {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
+    schedules?:  {
+      __typename: "ModelPostingScheduleConnection",
       items:  Array< {
-        __typename: "Scheduler",
+        __typename: "PostingSchedule",
         id: string,
         name: string,
         startAt?: number | null,
@@ -2028,8 +2178,8 @@ export type GetUserQuery = {
         status?: string | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2045,7 +2195,7 @@ export type GetUserQuery = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2060,9 +2210,9 @@ export type GetUserQuery = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -2094,11 +2244,11 @@ export type ListUsersQuery = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -2116,13 +2266,13 @@ export type ListUsersQuery = {
   } | null,
 };
 
-export type GetCollectionQueryVariables = {
+export type GetMediaCollectionQueryVariables = {
   id: string,
 };
 
-export type GetCollectionQuery = {
-  getCollection?:  {
-    __typename: "Collection",
+export type GetMediaCollectionQuery = {
+  getMediaCollection?:  {
+    __typename: "MediaCollection",
     id: string,
     name: string,
     user?:  {
@@ -2136,11 +2286,11 @@ export type GetCollectionQuery = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -2166,7 +2316,7 @@ export type GetCollectionQuery = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2181,50 +2331,73 @@ export type GetCollectionQuery = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
-      items:  Array< {
-        __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
+      id: string,
+      name: string,
+      startAt?: number | null,
+      endAt?: number | null,
+      postTarget?: number | null,
+      subreddits?: Array< string | null > | null,
+      status?: string | null,
+      user?:  {
+        __typename: "User",
         id: string,
-        name: string,
-        startAt?: number | null,
-        endAt?: number | null,
-        postTarget?: number | null,
-        subreddits?: Array< string | null > | null,
-        status?: string | null,
+        accountEmail: string,
+        accountId?: string | null,
+        accountName?: string | null,
+        accountAvator?: string | null,
+        accountQueryCode?: string | null,
+        subscriptionStatus?: string | null,
+        subscriptionExpiredAt?: number | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      collection?:  {
+        __typename: "MediaCollection",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+        userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
+      } | null,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userCollectionsId?: string | null,
+    mediaCollectionScheduleId?: string | null,
   } | null,
 };
 
-export type ListCollectionsQueryVariables = {
+export type ListMediaCollectionsQueryVariables = {
   id?: string | null,
-  filter?: ModelCollectionFilterInput | null,
+  filter?: ModelMediaCollectionFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
   sortDirection?: ModelSortDirection | null,
 };
 
-export type ListCollectionsQuery = {
-  listCollections?:  {
-    __typename: "ModelCollectionConnection",
+export type ListMediaCollectionsQuery = {
+  listMediaCollections?:  {
+    __typename: "ModelMediaCollectionConnection",
     items:  Array< {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -2248,13 +2421,24 @@ export type ListCollectionsQuery = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2283,11 +2467,11 @@ export type GetMediaQuery = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -2302,7 +2486,7 @@ export type GetMediaQuery = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -2326,13 +2510,24 @@ export type GetMediaQuery = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -2345,9 +2540,9 @@ export type GetMediaQuery = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -2355,7 +2550,7 @@ export type GetMediaQuery = {
     createdAt: string,
     updatedAt: string,
     userMediasId?: string | null,
-    collectionMediasId?: string | null,
+    mediaCollectionMediasId?: string | null,
   } | null,
 };
 
@@ -2391,12 +2586,13 @@ export type ListMediaQuery = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -2405,19 +2601,19 @@ export type ListMediaQuery = {
       createdAt: string,
       updatedAt: string,
       userMediasId?: string | null,
-      collectionMediasId?: string | null,
+      mediaCollectionMediasId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type GetSchedulerQueryVariables = {
+export type GetPostingScheduleQueryVariables = {
   id: string,
 };
 
-export type GetSchedulerQuery = {
-  getScheduler?:  {
-    __typename: "Scheduler",
+export type GetPostingScheduleQuery = {
+  getPostingSchedule?:  {
+    __typename: "PostingSchedule",
     id: string,
     name: string,
     startAt?: number | null,
@@ -2436,11 +2632,11 @@ export type GetSchedulerQuery = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -2455,7 +2651,7 @@ export type GetSchedulerQuery = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -2479,13 +2675,24 @@ export type GetSchedulerQuery = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -2498,33 +2705,33 @@ export type GetSchedulerQuery = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    userSchedulersId?: string | null,
-    collectionSchedulersId?: string | null,
+    userSchedulesId?: string | null,
+    postingScheduleCollectionId?: string | null,
   } | null,
 };
 
-export type ListSchedulersQueryVariables = {
+export type ListPostingSchedulesQueryVariables = {
   id?: string | null,
-  filter?: ModelSchedulerFilterInput | null,
+  filter?: ModelPostingScheduleFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
   sortDirection?: ModelSortDirection | null,
 };
 
-export type ListSchedulersQuery = {
-  listSchedulers?:  {
-    __typename: "ModelSchedulerConnection",
+export type ListPostingSchedulesQuery = {
+  listPostingSchedules?:  {
+    __typename: "ModelPostingScheduleConnection",
     items:  Array< {
-      __typename: "Scheduler",
+      __typename: "PostingSchedule",
       id: string,
       name: string,
       startAt?: number | null,
@@ -2546,12 +2753,13 @@ export type ListSchedulersQuery = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -2559,8 +2767,8 @@ export type ListSchedulersQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      userSchedulersId?: string | null,
-      collectionSchedulersId?: string | null,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2598,12 +2806,13 @@ export type GetPostQuery = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -2612,10 +2821,10 @@ export type GetPostQuery = {
       createdAt: string,
       updatedAt: string,
       userMediasId?: string | null,
-      collectionMediasId?: string | null,
+      mediaCollectionMediasId?: string | null,
     } | null,
-    scheduler?:  {
-      __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
       id: string,
       name: string,
       startAt?: number | null,
@@ -2637,12 +2846,13 @@ export type GetPostQuery = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -2650,15 +2860,15 @@ export type GetPostQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      userSchedulersId?: string | null,
-      collectionSchedulersId?: string | null,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userPostsId?: string | null,
-    collectionPostsId?: string | null,
+    mediaCollectionPostsId?: string | null,
     mediaPostsId?: string | null,
-    schedulerPostsId?: string | null,
+    postingSchedulePostsId?: string | null,
     postMediaId?: string | null,
   } | null,
 };
@@ -2690,10 +2900,10 @@ export type ListPostsQuery = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null,
-      scheduler?:  {
-        __typename: "Scheduler",
+      schedule?:  {
+        __typename: "PostingSchedule",
         id: string,
         name: string,
         startAt?: number | null,
@@ -2703,15 +2913,15 @@ export type ListPostsQuery = {
         status?: string | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userPostsId?: string | null,
-      collectionPostsId?: string | null,
+      mediaCollectionPostsId?: string | null,
       mediaPostsId?: string | null,
-      schedulerPostsId?: string | null,
+      postingSchedulePostsId?: string | null,
       postMediaId?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -2734,21 +2944,22 @@ export type OnCreateUserSubscription = {
     subscriptionStatus?: string | null,
     subscriptionExpiredAt?: number | null,
     collections?:  {
-      __typename: "ModelCollectionConnection",
+      __typename: "ModelMediaCollectionConnection",
       items:  Array< {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
+    schedules?:  {
+      __typename: "ModelPostingScheduleConnection",
       items:  Array< {
-        __typename: "Scheduler",
+        __typename: "PostingSchedule",
         id: string,
         name: string,
         startAt?: number | null,
@@ -2758,8 +2969,8 @@ export type OnCreateUserSubscription = {
         status?: string | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2775,7 +2986,7 @@ export type OnCreateUserSubscription = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2790,9 +3001,9 @@ export type OnCreateUserSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -2818,21 +3029,22 @@ export type OnUpdateUserSubscription = {
     subscriptionStatus?: string | null,
     subscriptionExpiredAt?: number | null,
     collections?:  {
-      __typename: "ModelCollectionConnection",
+      __typename: "ModelMediaCollectionConnection",
       items:  Array< {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
+    schedules?:  {
+      __typename: "ModelPostingScheduleConnection",
       items:  Array< {
-        __typename: "Scheduler",
+        __typename: "PostingSchedule",
         id: string,
         name: string,
         startAt?: number | null,
@@ -2842,8 +3054,8 @@ export type OnUpdateUserSubscription = {
         status?: string | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2859,7 +3071,7 @@ export type OnUpdateUserSubscription = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2874,9 +3086,9 @@ export type OnUpdateUserSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -2902,21 +3114,22 @@ export type OnDeleteUserSubscription = {
     subscriptionStatus?: string | null,
     subscriptionExpiredAt?: number | null,
     collections?:  {
-      __typename: "ModelCollectionConnection",
+      __typename: "ModelMediaCollectionConnection",
       items:  Array< {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
+    schedules?:  {
+      __typename: "ModelPostingScheduleConnection",
       items:  Array< {
-        __typename: "Scheduler",
+        __typename: "PostingSchedule",
         id: string,
         name: string,
         startAt?: number | null,
@@ -2926,8 +3139,8 @@ export type OnDeleteUserSubscription = {
         status?: string | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2943,7 +3156,7 @@ export type OnDeleteUserSubscription = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -2958,9 +3171,9 @@ export type OnDeleteUserSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -2970,13 +3183,13 @@ export type OnDeleteUserSubscription = {
   } | null,
 };
 
-export type OnCreateCollectionSubscriptionVariables = {
-  filter?: ModelSubscriptionCollectionFilterInput | null,
+export type OnCreateMediaCollectionSubscriptionVariables = {
+  filter?: ModelSubscriptionMediaCollectionFilterInput | null,
 };
 
-export type OnCreateCollectionSubscription = {
-  onCreateCollection?:  {
-    __typename: "Collection",
+export type OnCreateMediaCollectionSubscription = {
+  onCreateMediaCollection?:  {
+    __typename: "MediaCollection",
     id: string,
     name: string,
     user?:  {
@@ -2990,11 +3203,11 @@ export type OnCreateCollectionSubscription = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -3020,7 +3233,7 @@ export type OnCreateCollectionSubscription = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3035,44 +3248,67 @@ export type OnCreateCollectionSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
-      items:  Array< {
-        __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
+      id: string,
+      name: string,
+      startAt?: number | null,
+      endAt?: number | null,
+      postTarget?: number | null,
+      subreddits?: Array< string | null > | null,
+      status?: string | null,
+      user?:  {
+        __typename: "User",
         id: string,
-        name: string,
-        startAt?: number | null,
-        endAt?: number | null,
-        postTarget?: number | null,
-        subreddits?: Array< string | null > | null,
-        status?: string | null,
+        accountEmail: string,
+        accountId?: string | null,
+        accountName?: string | null,
+        accountAvator?: string | null,
+        accountQueryCode?: string | null,
+        subscriptionStatus?: string | null,
+        subscriptionExpiredAt?: number | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      collection?:  {
+        __typename: "MediaCollection",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+        userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
+      } | null,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userCollectionsId?: string | null,
+    mediaCollectionScheduleId?: string | null,
   } | null,
 };
 
-export type OnUpdateCollectionSubscriptionVariables = {
-  filter?: ModelSubscriptionCollectionFilterInput | null,
+export type OnUpdateMediaCollectionSubscriptionVariables = {
+  filter?: ModelSubscriptionMediaCollectionFilterInput | null,
 };
 
-export type OnUpdateCollectionSubscription = {
-  onUpdateCollection?:  {
-    __typename: "Collection",
+export type OnUpdateMediaCollectionSubscription = {
+  onUpdateMediaCollection?:  {
+    __typename: "MediaCollection",
     id: string,
     name: string,
     user?:  {
@@ -3086,11 +3322,11 @@ export type OnUpdateCollectionSubscription = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -3116,7 +3352,7 @@ export type OnUpdateCollectionSubscription = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3131,44 +3367,67 @@ export type OnUpdateCollectionSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
-      items:  Array< {
-        __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
+      id: string,
+      name: string,
+      startAt?: number | null,
+      endAt?: number | null,
+      postTarget?: number | null,
+      subreddits?: Array< string | null > | null,
+      status?: string | null,
+      user?:  {
+        __typename: "User",
         id: string,
-        name: string,
-        startAt?: number | null,
-        endAt?: number | null,
-        postTarget?: number | null,
-        subreddits?: Array< string | null > | null,
-        status?: string | null,
+        accountEmail: string,
+        accountId?: string | null,
+        accountName?: string | null,
+        accountAvator?: string | null,
+        accountQueryCode?: string | null,
+        subscriptionStatus?: string | null,
+        subscriptionExpiredAt?: number | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      collection?:  {
+        __typename: "MediaCollection",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+        userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
+      } | null,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userCollectionsId?: string | null,
+    mediaCollectionScheduleId?: string | null,
   } | null,
 };
 
-export type OnDeleteCollectionSubscriptionVariables = {
-  filter?: ModelSubscriptionCollectionFilterInput | null,
+export type OnDeleteMediaCollectionSubscriptionVariables = {
+  filter?: ModelSubscriptionMediaCollectionFilterInput | null,
 };
 
-export type OnDeleteCollectionSubscription = {
-  onDeleteCollection?:  {
-    __typename: "Collection",
+export type OnDeleteMediaCollectionSubscription = {
+  onDeleteMediaCollection?:  {
+    __typename: "MediaCollection",
     id: string,
     name: string,
     user?:  {
@@ -3182,11 +3441,11 @@ export type OnDeleteCollectionSubscription = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -3212,7 +3471,7 @@ export type OnDeleteCollectionSubscription = {
         createdAt: string,
         updatedAt: string,
         userMediasId?: string | null,
-        collectionMediasId?: string | null,
+        mediaCollectionMediasId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -3227,34 +3486,57 @@ export type OnDeleteCollectionSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
-    schedulers?:  {
-      __typename: "ModelSchedulerConnection",
-      items:  Array< {
-        __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
+      id: string,
+      name: string,
+      startAt?: number | null,
+      endAt?: number | null,
+      postTarget?: number | null,
+      subreddits?: Array< string | null > | null,
+      status?: string | null,
+      user?:  {
+        __typename: "User",
         id: string,
-        name: string,
-        startAt?: number | null,
-        endAt?: number | null,
-        postTarget?: number | null,
-        subreddits?: Array< string | null > | null,
-        status?: string | null,
+        accountEmail: string,
+        accountId?: string | null,
+        accountName?: string | null,
+        accountAvator?: string | null,
+        accountQueryCode?: string | null,
+        subscriptionStatus?: string | null,
+        subscriptionExpiredAt?: number | null,
         createdAt: string,
         updatedAt: string,
-        userSchedulersId?: string | null,
-        collectionSchedulersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
+      } | null,
+      collection?:  {
+        __typename: "MediaCollection",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+        userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
+      } | null,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userCollectionsId?: string | null,
+    mediaCollectionScheduleId?: string | null,
   } | null,
 };
 
@@ -3281,11 +3563,11 @@ export type OnCreateMediaSubscription = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -3300,7 +3582,7 @@ export type OnCreateMediaSubscription = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -3324,13 +3606,24 @@ export type OnCreateMediaSubscription = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -3343,9 +3636,9 @@ export type OnCreateMediaSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -3353,7 +3646,7 @@ export type OnCreateMediaSubscription = {
     createdAt: string,
     updatedAt: string,
     userMediasId?: string | null,
-    collectionMediasId?: string | null,
+    mediaCollectionMediasId?: string | null,
   } | null,
 };
 
@@ -3380,11 +3673,11 @@ export type OnUpdateMediaSubscription = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -3399,7 +3692,7 @@ export type OnUpdateMediaSubscription = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -3423,13 +3716,24 @@ export type OnUpdateMediaSubscription = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -3442,9 +3746,9 @@ export type OnUpdateMediaSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -3452,7 +3756,7 @@ export type OnUpdateMediaSubscription = {
     createdAt: string,
     updatedAt: string,
     userMediasId?: string | null,
-    collectionMediasId?: string | null,
+    mediaCollectionMediasId?: string | null,
   } | null,
 };
 
@@ -3479,11 +3783,11 @@ export type OnDeleteMediaSubscription = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -3498,7 +3802,7 @@ export type OnDeleteMediaSubscription = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -3522,13 +3826,24 @@ export type OnDeleteMediaSubscription = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -3541,9 +3856,9 @@ export type OnDeleteMediaSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -3551,17 +3866,17 @@ export type OnDeleteMediaSubscription = {
     createdAt: string,
     updatedAt: string,
     userMediasId?: string | null,
-    collectionMediasId?: string | null,
+    mediaCollectionMediasId?: string | null,
   } | null,
 };
 
-export type OnCreateSchedulerSubscriptionVariables = {
-  filter?: ModelSubscriptionSchedulerFilterInput | null,
+export type OnCreatePostingScheduleSubscriptionVariables = {
+  filter?: ModelSubscriptionPostingScheduleFilterInput | null,
 };
 
-export type OnCreateSchedulerSubscription = {
-  onCreateScheduler?:  {
-    __typename: "Scheduler",
+export type OnCreatePostingScheduleSubscription = {
+  onCreatePostingSchedule?:  {
+    __typename: "PostingSchedule",
     id: string,
     name: string,
     startAt?: number | null,
@@ -3580,11 +3895,11 @@ export type OnCreateSchedulerSubscription = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -3599,7 +3914,7 @@ export type OnCreateSchedulerSubscription = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -3623,13 +3938,24 @@ export type OnCreateSchedulerSubscription = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -3642,27 +3968,27 @@ export type OnCreateSchedulerSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    userSchedulersId?: string | null,
-    collectionSchedulersId?: string | null,
+    userSchedulesId?: string | null,
+    postingScheduleCollectionId?: string | null,
   } | null,
 };
 
-export type OnUpdateSchedulerSubscriptionVariables = {
-  filter?: ModelSubscriptionSchedulerFilterInput | null,
+export type OnUpdatePostingScheduleSubscriptionVariables = {
+  filter?: ModelSubscriptionPostingScheduleFilterInput | null,
 };
 
-export type OnUpdateSchedulerSubscription = {
-  onUpdateScheduler?:  {
-    __typename: "Scheduler",
+export type OnUpdatePostingScheduleSubscription = {
+  onUpdatePostingSchedule?:  {
+    __typename: "PostingSchedule",
     id: string,
     name: string,
     startAt?: number | null,
@@ -3681,11 +4007,11 @@ export type OnUpdateSchedulerSubscription = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -3700,7 +4026,7 @@ export type OnUpdateSchedulerSubscription = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -3724,13 +4050,24 @@ export type OnUpdateSchedulerSubscription = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -3743,27 +4080,27 @@ export type OnUpdateSchedulerSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    userSchedulersId?: string | null,
-    collectionSchedulersId?: string | null,
+    userSchedulesId?: string | null,
+    postingScheduleCollectionId?: string | null,
   } | null,
 };
 
-export type OnDeleteSchedulerSubscriptionVariables = {
-  filter?: ModelSubscriptionSchedulerFilterInput | null,
+export type OnDeletePostingScheduleSubscriptionVariables = {
+  filter?: ModelSubscriptionPostingScheduleFilterInput | null,
 };
 
-export type OnDeleteSchedulerSubscription = {
-  onDeleteScheduler?:  {
-    __typename: "Scheduler",
+export type OnDeletePostingScheduleSubscription = {
+  onDeletePostingSchedule?:  {
+    __typename: "PostingSchedule",
     id: string,
     name: string,
     startAt?: number | null,
@@ -3782,11 +4119,11 @@ export type OnDeleteSchedulerSubscription = {
       subscriptionStatus?: string | null,
       subscriptionExpiredAt?: number | null,
       collections?:  {
-        __typename: "ModelCollectionConnection",
+        __typename: "ModelMediaCollectionConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
+      schedules?:  {
+        __typename: "ModelPostingScheduleConnection",
         nextToken?: string | null,
       } | null,
       medias?:  {
@@ -3801,7 +4138,7 @@ export type OnDeleteSchedulerSubscription = {
       updatedAt: string,
     } | null,
     collection?:  {
-      __typename: "Collection",
+      __typename: "MediaCollection",
       id: string,
       name: string,
       user?:  {
@@ -3825,13 +4162,24 @@ export type OnDeleteSchedulerSubscription = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
-      schedulers?:  {
-        __typename: "ModelSchedulerConnection",
-        nextToken?: string | null,
+      schedule?:  {
+        __typename: "PostingSchedule",
+        id: string,
+        name: string,
+        startAt?: number | null,
+        endAt?: number | null,
+        postTarget?: number | null,
+        subreddits?: Array< string | null > | null,
+        status?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        userSchedulesId?: string | null,
+        postingScheduleCollectionId?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
       userCollectionsId?: string | null,
+      mediaCollectionScheduleId?: string | null,
     } | null,
     posts?:  {
       __typename: "ModelPostConnection",
@@ -3844,17 +4192,17 @@ export type OnDeleteSchedulerSubscription = {
         createdAt: string,
         updatedAt: string,
         userPostsId?: string | null,
-        collectionPostsId?: string | null,
+        mediaCollectionPostsId?: string | null,
         mediaPostsId?: string | null,
-        schedulerPostsId?: string | null,
+        postingSchedulePostsId?: string | null,
         postMediaId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    userSchedulersId?: string | null,
-    collectionSchedulersId?: string | null,
+    userSchedulesId?: string | null,
+    postingScheduleCollectionId?: string | null,
   } | null,
 };
 
@@ -3890,12 +4238,13 @@ export type OnCreatePostSubscription = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -3904,10 +4253,10 @@ export type OnCreatePostSubscription = {
       createdAt: string,
       updatedAt: string,
       userMediasId?: string | null,
-      collectionMediasId?: string | null,
+      mediaCollectionMediasId?: string | null,
     } | null,
-    scheduler?:  {
-      __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
       id: string,
       name: string,
       startAt?: number | null,
@@ -3929,12 +4278,13 @@ export type OnCreatePostSubscription = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -3942,15 +4292,15 @@ export type OnCreatePostSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      userSchedulersId?: string | null,
-      collectionSchedulersId?: string | null,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userPostsId?: string | null,
-    collectionPostsId?: string | null,
+    mediaCollectionPostsId?: string | null,
     mediaPostsId?: string | null,
-    schedulerPostsId?: string | null,
+    postingSchedulePostsId?: string | null,
     postMediaId?: string | null,
   } | null,
 };
@@ -3987,12 +4337,13 @@ export type OnUpdatePostSubscription = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -4001,10 +4352,10 @@ export type OnUpdatePostSubscription = {
       createdAt: string,
       updatedAt: string,
       userMediasId?: string | null,
-      collectionMediasId?: string | null,
+      mediaCollectionMediasId?: string | null,
     } | null,
-    scheduler?:  {
-      __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
       id: string,
       name: string,
       startAt?: number | null,
@@ -4026,12 +4377,13 @@ export type OnUpdatePostSubscription = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -4039,15 +4391,15 @@ export type OnUpdatePostSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      userSchedulersId?: string | null,
-      collectionSchedulersId?: string | null,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userPostsId?: string | null,
-    collectionPostsId?: string | null,
+    mediaCollectionPostsId?: string | null,
     mediaPostsId?: string | null,
-    schedulerPostsId?: string | null,
+    postingSchedulePostsId?: string | null,
     postMediaId?: string | null,
   } | null,
 };
@@ -4084,12 +4436,13 @@ export type OnDeletePostSubscription = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -4098,10 +4451,10 @@ export type OnDeletePostSubscription = {
       createdAt: string,
       updatedAt: string,
       userMediasId?: string | null,
-      collectionMediasId?: string | null,
+      mediaCollectionMediasId?: string | null,
     } | null,
-    scheduler?:  {
-      __typename: "Scheduler",
+    schedule?:  {
+      __typename: "PostingSchedule",
       id: string,
       name: string,
       startAt?: number | null,
@@ -4123,12 +4476,13 @@ export type OnDeletePostSubscription = {
         updatedAt: string,
       } | null,
       collection?:  {
-        __typename: "Collection",
+        __typename: "MediaCollection",
         id: string,
         name: string,
         createdAt: string,
         updatedAt: string,
         userCollectionsId?: string | null,
+        mediaCollectionScheduleId?: string | null,
       } | null,
       posts?:  {
         __typename: "ModelPostConnection",
@@ -4136,15 +4490,15 @@ export type OnDeletePostSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      userSchedulersId?: string | null,
-      collectionSchedulersId?: string | null,
+      userSchedulesId?: string | null,
+      postingScheduleCollectionId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     userPostsId?: string | null,
-    collectionPostsId?: string | null,
+    mediaCollectionPostsId?: string | null,
     mediaPostsId?: string | null,
-    schedulerPostsId?: string | null,
+    postingSchedulePostsId?: string | null,
     postMediaId?: string | null,
   } | null,
 };
