@@ -75,64 +75,6 @@
       "type": "cicd"
     }
   },
-  "parameters": {
-    "AMPLIFY_function_gyofbMiddleTier_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "gyofbMiddleTier"
-        }
-      ]
-    },
-    "AMPLIFY_function_gyofbMiddleTier_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "gyofbMiddleTier"
-        }
-      ]
-    },
-    "AMPLIFY_function_gyofbMiddleTier_viteRedditClientId": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "gyofbMiddleTier"
-        }
-      ]
-    },
-    "AMPLIFY_function_gyofbMiddleTier_viteRedditClientSecret": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "gyofbMiddleTier"
-        }
-      ]
-    },
-    "AMPLIFY_function_gyofbMiddleTier_viteRedditRedirectUri": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "gyofbMiddleTier"
-        }
-      ]
-    },
-    "AMPLIFY_hosting_amplifyhosting_appId": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
-        }
-      ]
-    },
-    "AMPLIFY_hosting_amplifyhosting_type": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
-        }
-      ]
-    }
-  },
   "storage": {
     "gyofbfrontend": {
       "dependsOn": [],

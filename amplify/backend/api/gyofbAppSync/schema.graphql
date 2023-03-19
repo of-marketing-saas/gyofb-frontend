@@ -11,19 +11,19 @@ type User @model {
   accountQueryCode: String
   subscriptionStatus: String
   subscriptionExpiredAt: Int
-  collections: [Collection] @hasMany
-  schedulers: [Scheduler] @hasMany
+  collections: [MediaCollection] @hasMany
+  schedules: [PostingSchedule] @hasMany
   medias: [Media] @hasMany
   posts: [Post] @hasMany
 }
 
-type Collection @model {
+type MediaCollection @model {
   id: ID! @primaryKey
   name: String!
   user: User @belongsTo
   medias: [Media] @hasMany
   posts: [Post] @hasMany
-  schedulers: [Scheduler] @hasMany
+  schedule: PostingSchedule @hasOne
 }
 
 type Media @model {
@@ -33,11 +33,11 @@ type Media @model {
   s3Key: String
   preferred: Boolean
   user: User @belongsTo
-  collection: Collection @belongsTo
+  collection: MediaCollection @belongsTo
   posts: [Post] @hasMany
 }
 
-type Scheduler @model {
+type PostingSchedule @model {
   id: ID! @primaryKey
   name: String!
   startAt: AWSTimestamp
@@ -46,7 +46,7 @@ type Scheduler @model {
   subreddits: [String]
   status: String
   user: User @belongsTo
-  collection: Collection @belongsTo
+  collection: MediaCollection @belongsTo
   posts: [Post] @hasMany
 }
 
@@ -56,5 +56,5 @@ type Post @model {
   subreddit: String!
   url: String
   media: Media @hasOne
-  scheduler: Scheduler @belongsTo
+  schedule: PostingSchedule @belongsTo
 }
