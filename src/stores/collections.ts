@@ -2,42 +2,42 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { API } from 'aws-amplify';
 import type {
-  Collection,
-  CreateCollectionInput,
-  CreateCollectionMutation,
+  MediaCollection,
+  CreateMediaCollectionInput,
+  CreateMediaCollectionMutation,
   CreateMediaInput,
   CreateMediaMutation,
-  GetCollectionQuery,
-  ListCollectionsQuery,
+  GetMediaCollectionQuery,
+  ListMediaCollectionsQuery,
 } from '@/API';
 import type { GraphQLQuery, GraphQLResult } from '@aws-amplify/api';
 import { graphqlOperation } from '@aws-amplify/api';
-import { listCollections, getCollection as getCollectionQuery } from '@/graphql/queries';
+import { listMediaCollections, getMediaCollection as getCollectionQuery } from '@/graphql/queries';
 import {
-  createCollection as createCollectionMutation,
+  createMediaCollection as createCollectionMutation,
   createMedia as createMediaMutation,
 } from '@/graphql/mutations';
 
 export const useCollectionStore = defineStore('collections', () => {
-  const collections = ref<Collection[]>([]);
-  const currentCollection = ref<Collection>({} as Collection);
+  const collections = ref<MediaCollection[]>([]);
+  const currentCollection = ref<MediaCollection>({} as MediaCollection);
   const loading = ref(false);
 
   const loadCollections = async (userCollectionsId: string) => {
     loading.value = true;
-    const results = (await API.graphql<GraphQLQuery<ListCollectionsQuery>>(
-      graphqlOperation(listCollections, { userCollectionsId }),
-    )) as GraphQLResult<ListCollectionsQuery>;
-    Object.assign(collections.value, results.data?.listCollections?.items);
+    const results = (await API.graphql<GraphQLQuery<ListMediaCollectionsQuery>>(
+      graphqlOperation(listMediaCollections, { userCollectionsId }),
+    )) as GraphQLResult<ListMediaCollectionsQuery>;
+    Object.assign(collections.value, results.data?.listMediaCollections?.items);
     loading.value = false;
   };
 
-  const createCollection = async (input: CreateCollectionInput) => {
+  const createCollection = async (input: CreateMediaCollectionInput) => {
     loading.value = true;
-    const result = (await API.graphql<GraphQLQuery<CreateCollectionMutation>>(
+    const result = (await API.graphql<GraphQLQuery<CreateMediaCollectionMutation>>(
       graphqlOperation(createCollectionMutation, { input }),
-    )) as GraphQLResult<CreateCollectionMutation>;
-    const collection = result.data?.createCollection;
+    )) as GraphQLResult<CreateMediaCollectionMutation>;
+    const collection = result.data?.createMediaCollection;
     Object.assign(currentCollection.value, collection);
     loading.value = false;
     return collection;
@@ -45,10 +45,10 @@ export const useCollectionStore = defineStore('collections', () => {
 
   const getCollection = async (id: String) => {
     loading.value = true;
-    const result = (await API.graphql<GraphQLQuery<GetCollectionQuery>>(
+    const result = (await API.graphql<GraphQLQuery<GetMediaCollectionQuery>>(
       graphqlOperation(getCollectionQuery, { id }),
-    )) as GraphQLResult<GetCollectionQuery>;
-    const collection = result.data?.getCollection;
+    )) as GraphQLResult<GetMediaCollectionQuery>;
+    const collection = result.data?.getMediaCollection;
     Object.assign(currentCollection.value, collection);
     loading.value = false;
     return collection;

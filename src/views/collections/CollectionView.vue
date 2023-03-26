@@ -27,9 +27,9 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import CollectionDetails from '@/views/collections/CollectionDetails.vue';
 import { useCollectionStore } from '@/stores/collections';
-import type { Collection } from '@/API';
+import type { MediaCollection } from '@/API';
 
-const collection = ref<Collection>({} as Collection);
+const collection = ref<MediaCollection>({} as MediaCollection);
 
 const route = useRoute();
 const router = useRouter();

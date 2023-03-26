@@ -1,5 +1,5 @@
 <template>
-  <v-dialog width="75%" v-model="dialogModel">
+  <v-dialog width="50%" v-model="dialogModel">
     <template v-slot:activator="{ props }">
       <v-btn density="comfortable" color="primary" v-bind="props"> New Collection </v-btn>
     </template>
@@ -8,14 +8,24 @@
       <v-card-text>
         <v-text-field
           clearable
+          variant="outlined"
           density="comfortable"
           label="Collection Name"
           v-model="name"
         ></v-text-field>
+        <v-textarea
+          clearable
+          variant="outlined"
+          density="comfortable"
+          label="Collection Description"
+          v-model="description"
+        ></v-textarea>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn variant="tonal" color="primary" @click="onCreateCollection()">Create</v-btn>
+        <v-btn class="mr-4" variant="tonal" color="primary" @click="onCreateCollection()">
+          Create
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -33,6 +43,7 @@ const { createCollection } = useCollectionStore();
 
 const dialog = ref(false);
 const collectionName = ref('');
+const collectionDescription = ref('');
 
 const dialogModel = computed({
   get: () => dialog.value,
@@ -46,10 +57,17 @@ const name = computed({
     collectionName.value = value;
   },
 });
+const description = computed({
+  get: () => collectionDescription.value,
+  set: (value) => {
+    collectionDescription.value = value;
+  },
+});
 
 const onCreateCollection = async () => {
   const collection = await createCollection({
     name: collectionName.value,
+    description: collectionDescription.value,
     userCollectionsId: user.id,
   });
   router.push(`/collections/${collection?.id}}`);

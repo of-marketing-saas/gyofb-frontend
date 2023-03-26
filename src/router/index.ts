@@ -19,19 +19,19 @@ const router = createRouter({
       component: () => import('../views/dashboard/DashboardView.vue'),
     },
     {
-      path: '/schedulers',
-      name: 'schedulers',
-      component: () => import('../views/schedulers/SchedulerDashboard.vue'),
+      path: '/schedules',
+      name: 'schedules',
+      component: () => import('../views/schedules/ScheduleDashboard.vue'),
     },
     {
-      path: '/schedulers/new',
-      name: 'create-scheduler',
-      component: () => import('../views/schedulers/CreateScheduler.vue'),
+      path: '/schedules/new',
+      name: 'create-schedule',
+      component: () => import('../views/schedules/CreateSchedule.vue'),
     },
     {
-      path: '/schedulers/:schedulerId',
-      name: 'scheduler-view',
-      component: () => import('../views/schedulers/SchedulerView.vue'),
+      path: '/schedules/:scheduleId',
+      name: 'schedule-view',
+      component: () => import('../views/schedules/ScheduleView.vue'),
     },
     {
       path: '/reddit/authorized',
@@ -71,7 +71,7 @@ const router = createRouter({
       ],
     },
     {
-      path: '/collections/:collectionId/scheduler/:postId',
+      path: '/collections/:collectionId/schedule/:postId',
       name: 'post-view',
       component: () => import('../views/posts/PostView.vue'),
     },

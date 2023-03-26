@@ -37,7 +37,8 @@ export const useFileList = () => {
   ) => {
     updateFile(id, { status: 'uploading' });
     try {
-      const result = await Storage.put(`${filePrefix}/${file.name}`, file, {
+      const fileKey = `${filePrefix}/${file.name}`;
+      const result = await Storage.put(fileKey, file, {
         contentType: file.type,
         progressCallback: (progress) => {
           updateFile(id, { progress: progress.loaded / progress.total });
@@ -64,7 +65,7 @@ export class UploadableFile {
   id: string;
   url: string;
   progress: number = 0;
-  status: 'pending' | 'uploading' | 'uploaded' | 'error' = 'pending';
+  status: 'pending' | 'uploading' | 'duplicate' | 'uploaded' | 'error' = 'pending';
   s3Key: string = '';
 
   constructor(file: File) {

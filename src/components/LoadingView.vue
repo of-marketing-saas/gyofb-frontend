@@ -1,16 +1,12 @@
 <template>
-  <div class="loading">
-    <v-progress-circular indeterminate color="primary"></v-progress-circular>
-  </div>
+  <v-layout class="loading align-center justify-center">
+    <v-progress-circular indeterminate :size="36" color="primary"></v-progress-circular>
+  </v-layout>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped>
 .loading {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 </style>

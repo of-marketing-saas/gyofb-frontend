@@ -27,6 +27,9 @@
       >
         mdi-delete
       </v-icon>
+      <v-icon v-else-if="item.raw.status === 'duplicate'" color="warning" size="small">
+        mdi-content-duplicate
+      </v-icon>
       <v-icon v-else-if="item.raw.status === 'uploaded'" color="success" size="small">
         mdi-cloud-check-variant
       </v-icon>

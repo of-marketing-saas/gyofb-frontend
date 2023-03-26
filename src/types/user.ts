@@ -7,5 +7,5 @@ export enum SubscriptionStatus {
 export type UserQuota = {
   maxPosts: number;
   maxMedias: number;
-  maxSchedulers: number;
+  maxSchedules: number;
 };

@@ -95,7 +95,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "getCollection",
+          "name" : "getMediaCollection",
           "description" : null,
           "args" : [ {
             "name" : "id",
@@ -113,13 +113,13 @@
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Collection",
+            "name" : "MediaCollection",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "listCollections",
+          "name" : "listMediaCollections",
           "description" : null,
           "args" : [ {
             "name" : "id",
@@ -135,7 +135,7 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelCollectionFilterInput",
+              "name" : "ModelMediaCollectionFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
@@ -169,7 +169,7 @@
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "ModelCollectionConnection",
+            "name" : "ModelMediaCollectionConnection",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -255,7 +255,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "getScheduler",
+          "name" : "getPostingSchedule",
           "description" : null,
           "args" : [ {
             "name" : "id",
@@ -273,13 +273,13 @@
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Scheduler",
+            "name" : "PostingSchedule",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "listSchedulers",
+          "name" : "listPostingSchedules",
           "description" : null,
           "args" : [ {
             "name" : "id",
@@ -295,7 +295,7 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerFilterInput",
+              "name" : "ModelPostingScheduleFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
@@ -329,7 +329,7 @@
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "ModelSchedulerConnection",
+            "name" : "ModelPostingScheduleConnection",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -527,7 +527,7 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelCollectionFilterInput",
+              "name" : "ModelMediaCollectionFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
@@ -561,20 +561,20 @@
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "ModelCollectionConnection",
+            "name" : "ModelMediaCollectionConnection",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "schedulers",
+          "name" : "schedules",
           "description" : null,
           "args" : [ {
             "name" : "filter",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerFilterInput",
+              "name" : "ModelPostingScheduleFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
@@ -608,7 +608,7 @@
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "ModelSchedulerConnection",
+            "name" : "ModelPostingScheduleConnection",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -771,7 +771,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
-        "name" : "ModelCollectionConnection",
+        "name" : "ModelMediaCollectionConnection",
         "description" : null,
         "fields" : [ {
           "name" : "items",
@@ -785,7 +785,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "OBJECT",
-                "name" : "Collection",
+                "name" : "MediaCollection",
                 "ofType" : null
               }
             }
@@ -810,7 +810,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
-        "name" : "Collection",
+        "name" : "MediaCollection",
         "description" : null,
         "fields" : [ {
           "name" : "id",
@@ -839,6 +839,17 @@
               "name" : "String",
               "ofType" : null
             }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "description",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -948,48 +959,12 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "schedulers",
+          "name" : "schedule",
           "description" : null,
-          "args" : [ {
-            "name" : "filter",
-            "description" : null,
-            "type" : {
-              "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerFilterInput",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "sortDirection",
-            "description" : null,
-            "type" : {
-              "kind" : "ENUM",
-              "name" : "ModelSortDirection",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "limit",
-            "description" : null,
-            "type" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "nextToken",
-            "description" : null,
-            "type" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          } ],
+          "args" : [ ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "ModelSchedulerConnection",
+            "name" : "PostingSchedule",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -1026,6 +1001,17 @@
           "deprecationReason" : null
         }, {
           "name" : "userCollectionsId",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "mediaCollectionScheduleId",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -1163,7 +1149,7 @@
           "args" : [ ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Collection",
+            "name" : "MediaCollection",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -1257,7 +1243,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "collectionMediasId",
+          "name" : "mediaCollectionMediasId",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -1392,12 +1378,12 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "scheduler",
+          "name" : "schedule",
           "description" : null,
           "args" : [ ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Scheduler",
+            "name" : "PostingSchedule",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -1444,7 +1430,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "collectionPostsId",
+          "name" : "mediaCollectionPostsId",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -1466,7 +1452,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "schedulerPostsId",
+          "name" : "postingSchedulePostsId",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -1494,7 +1480,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
-        "name" : "Scheduler",
+        "name" : "PostingSchedule",
         "description" : null,
         "fields" : [ {
           "name" : "id",
@@ -1602,7 +1588,7 @@
           "args" : [ ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Collection",
+            "name" : "MediaCollection",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -1685,7 +1671,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "userSchedulersId",
+          "name" : "userSchedulesId",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -1696,7 +1682,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "collectionSchedulersId",
+          "name" : "postingScheduleCollectionId",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -1806,7 +1792,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionPostsId",
+          "name" : "mediaCollectionPostsId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -1824,7 +1810,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "schedulerPostsId",
+          "name" : "postingSchedulePostsId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2363,7 +2349,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionMediasId",
+          "name" : "mediaCollectionMediasId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2421,8 +2407,97 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelMediaCollectionFilterInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "name",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "description",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "and",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelMediaCollectionFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "or",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelMediaCollectionFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "not",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelMediaCollectionFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userCollectionsId",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "mediaCollectionScheduleId",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
         "kind" : "OBJECT",
-        "name" : "ModelSchedulerConnection",
+        "name" : "ModelPostingScheduleConnection",
         "description" : null,
         "fields" : [ {
           "name" : "items",
@@ -2436,7 +2511,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "OBJECT",
-                "name" : "Scheduler",
+                "name" : "PostingSchedule",
                 "ofType" : null
               }
             }
@@ -2461,7 +2536,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelSchedulerFilterInput",
+        "name" : "ModelPostingScheduleFilterInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -2535,7 +2610,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerFilterInput",
+              "name" : "ModelPostingScheduleFilterInput",
               "ofType" : null
             }
           },
@@ -2548,7 +2623,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerFilterInput",
+              "name" : "ModelPostingScheduleFilterInput",
               "ofType" : null
             }
           },
@@ -2558,12 +2633,12 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelSchedulerFilterInput",
+            "name" : "ModelPostingScheduleFilterInput",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "userSchedulersId",
+          "name" : "userSchedulesId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2572,7 +2647,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionSchedulersId",
+          "name" : "postingScheduleCollectionId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2671,77 +2746,6 @@
           "type" : {
             "kind" : "ENUM",
             "name" : "ModelAttributeTypes",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        } ],
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "INPUT_OBJECT",
-        "name" : "ModelCollectionFilterInput",
-        "description" : null,
-        "fields" : null,
-        "inputFields" : [ {
-          "name" : "id",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelIDInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "name",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelStringInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "and",
-          "description" : null,
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "INPUT_OBJECT",
-              "name" : "ModelCollectionFilterInput",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "or",
-          "description" : null,
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "INPUT_OBJECT",
-              "name" : "ModelCollectionFilterInput",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "not",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelCollectionFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "userCollectionsId",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelIDInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3008,7 +3012,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "createCollection",
+          "name" : "createMediaCollection",
           "description" : null,
           "args" : [ {
             "name" : "input",
@@ -3018,7 +3022,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "INPUT_OBJECT",
-                "name" : "CreateCollectionInput",
+                "name" : "CreateMediaCollectionInput",
                 "ofType" : null
               }
             },
@@ -3028,20 +3032,20 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelCollectionConditionInput",
+              "name" : "ModelMediaCollectionConditionInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Collection",
+            "name" : "MediaCollection",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "updateCollection",
+          "name" : "updateMediaCollection",
           "description" : null,
           "args" : [ {
             "name" : "input",
@@ -3051,7 +3055,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "INPUT_OBJECT",
-                "name" : "UpdateCollectionInput",
+                "name" : "UpdateMediaCollectionInput",
                 "ofType" : null
               }
             },
@@ -3061,20 +3065,20 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelCollectionConditionInput",
+              "name" : "ModelMediaCollectionConditionInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Collection",
+            "name" : "MediaCollection",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "deleteCollection",
+          "name" : "deleteMediaCollection",
           "description" : null,
           "args" : [ {
             "name" : "input",
@@ -3084,7 +3088,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "INPUT_OBJECT",
-                "name" : "DeleteCollectionInput",
+                "name" : "DeleteMediaCollectionInput",
                 "ofType" : null
               }
             },
@@ -3094,14 +3098,14 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelCollectionConditionInput",
+              "name" : "ModelMediaCollectionConditionInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Collection",
+            "name" : "MediaCollection",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -3206,7 +3210,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "createScheduler",
+          "name" : "createPostingSchedule",
           "description" : null,
           "args" : [ {
             "name" : "input",
@@ -3216,7 +3220,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "INPUT_OBJECT",
-                "name" : "CreateSchedulerInput",
+                "name" : "CreatePostingScheduleInput",
                 "ofType" : null
               }
             },
@@ -3226,20 +3230,20 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerConditionInput",
+              "name" : "ModelPostingScheduleConditionInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Scheduler",
+            "name" : "PostingSchedule",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "updateScheduler",
+          "name" : "updatePostingSchedule",
           "description" : null,
           "args" : [ {
             "name" : "input",
@@ -3249,7 +3253,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "INPUT_OBJECT",
-                "name" : "UpdateSchedulerInput",
+                "name" : "UpdatePostingScheduleInput",
                 "ofType" : null
               }
             },
@@ -3259,20 +3263,20 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerConditionInput",
+              "name" : "ModelPostingScheduleConditionInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Scheduler",
+            "name" : "PostingSchedule",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "deleteScheduler",
+          "name" : "deletePostingSchedule",
           "description" : null,
           "args" : [ {
             "name" : "input",
@@ -3282,7 +3286,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "INPUT_OBJECT",
-                "name" : "DeleteSchedulerInput",
+                "name" : "DeletePostingScheduleInput",
                 "ofType" : null
               }
             },
@@ -3292,14 +3296,14 @@
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerConditionInput",
+              "name" : "ModelPostingScheduleConditionInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Scheduler",
+            "name" : "PostingSchedule",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -3709,7 +3713,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "CreateCollectionInput",
+        "name" : "CreateMediaCollectionInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -3735,7 +3739,25 @@
           },
           "defaultValue" : null
         }, {
+          "name" : "description",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "userCollectionsId",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "mediaCollectionScheduleId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3749,11 +3771,20 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelCollectionConditionInput",
+        "name" : "ModelMediaCollectionConditionInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
           "name" : "name",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "description",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -3769,7 +3800,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelCollectionConditionInput",
+              "name" : "ModelMediaCollectionConditionInput",
               "ofType" : null
             }
           },
@@ -3782,7 +3813,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelCollectionConditionInput",
+              "name" : "ModelMediaCollectionConditionInput",
               "ofType" : null
             }
           },
@@ -3792,12 +3823,21 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelCollectionConditionInput",
+            "name" : "ModelMediaCollectionConditionInput",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
           "name" : "userCollectionsId",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "mediaCollectionScheduleId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -3811,7 +3851,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "UpdateCollectionInput",
+        "name" : "UpdateMediaCollectionInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -3837,7 +3877,25 @@
           },
           "defaultValue" : null
         }, {
+          "name" : "description",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "userCollectionsId",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "mediaCollectionScheduleId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3851,7 +3909,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "DeleteCollectionInput",
+        "name" : "DeleteMediaCollectionInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -3935,7 +3993,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionMediasId",
+          "name" : "mediaCollectionMediasId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4033,7 +4091,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionMediasId",
+          "name" : "mediaCollectionMediasId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -4109,7 +4167,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionMediasId",
+          "name" : "mediaCollectionMediasId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4145,7 +4203,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "CreateSchedulerInput",
+        "name" : "CreatePostingScheduleInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -4220,7 +4278,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userSchedulersId",
+          "name" : "userSchedulesId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4229,7 +4287,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionSchedulersId",
+          "name" : "postingScheduleCollectionId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4243,7 +4301,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelSchedulerConditionInput",
+        "name" : "ModelPostingScheduleConditionInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -4308,7 +4366,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerConditionInput",
+              "name" : "ModelPostingScheduleConditionInput",
               "ofType" : null
             }
           },
@@ -4321,7 +4379,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSchedulerConditionInput",
+              "name" : "ModelPostingScheduleConditionInput",
               "ofType" : null
             }
           },
@@ -4331,12 +4389,12 @@
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "ModelSchedulerConditionInput",
+            "name" : "ModelPostingScheduleConditionInput",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "userSchedulersId",
+          "name" : "userSchedulesId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -4345,7 +4403,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionSchedulersId",
+          "name" : "postingScheduleCollectionId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -4359,7 +4417,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "UpdateSchedulerInput",
+        "name" : "UpdatePostingScheduleInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -4434,7 +4492,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userSchedulersId",
+          "name" : "userSchedulesId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4443,7 +4501,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionSchedulersId",
+          "name" : "postingScheduleCollectionId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4457,7 +4515,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "DeleteSchedulerInput",
+        "name" : "DeletePostingScheduleInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -4536,7 +4594,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionPostsId",
+          "name" : "mediaCollectionPostsId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4554,7 +4612,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "schedulerPostsId",
+          "name" : "postingSchedulePostsId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4652,7 +4710,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionPostsId",
+          "name" : "mediaCollectionPostsId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -4670,7 +4728,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "schedulerPostsId",
+          "name" : "postingSchedulePostsId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -4746,7 +4804,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "collectionPostsId",
+          "name" : "mediaCollectionPostsId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4764,7 +4822,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "schedulerPostsId",
+          "name" : "postingSchedulePostsId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4872,61 +4930,61 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onCreateCollection",
+          "name" : "onCreateMediaCollection",
           "description" : null,
           "args" : [ {
             "name" : "filter",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionCollectionFilterInput",
+              "name" : "ModelSubscriptionMediaCollectionFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Collection",
+            "name" : "MediaCollection",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onUpdateCollection",
+          "name" : "onUpdateMediaCollection",
           "description" : null,
           "args" : [ {
             "name" : "filter",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionCollectionFilterInput",
+              "name" : "ModelSubscriptionMediaCollectionFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Collection",
+            "name" : "MediaCollection",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onDeleteCollection",
+          "name" : "onDeleteMediaCollection",
           "description" : null,
           "args" : [ {
             "name" : "filter",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionCollectionFilterInput",
+              "name" : "ModelSubscriptionMediaCollectionFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Collection",
+            "name" : "MediaCollection",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -4992,61 +5050,61 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onCreateScheduler",
+          "name" : "onCreatePostingSchedule",
           "description" : null,
           "args" : [ {
             "name" : "filter",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionSchedulerFilterInput",
+              "name" : "ModelSubscriptionPostingScheduleFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Scheduler",
+            "name" : "PostingSchedule",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onUpdateScheduler",
+          "name" : "onUpdatePostingSchedule",
           "description" : null,
           "args" : [ {
             "name" : "filter",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionSchedulerFilterInput",
+              "name" : "ModelSubscriptionPostingScheduleFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Scheduler",
+            "name" : "PostingSchedule",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onDeleteScheduler",
+          "name" : "onDeletePostingSchedule",
           "description" : null,
           "args" : [ {
             "name" : "filter",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionSchedulerFilterInput",
+              "name" : "ModelSubscriptionPostingScheduleFilterInput",
               "ofType" : null
             },
             "defaultValue" : null
           } ],
           "type" : {
             "kind" : "OBJECT",
-            "name" : "Scheduler",
+            "name" : "PostingSchedule",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -5585,7 +5643,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelSubscriptionCollectionFilterInput",
+        "name" : "ModelSubscriptionMediaCollectionFilterInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -5607,6 +5665,15 @@
           },
           "defaultValue" : null
         }, {
+          "name" : "description",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "and",
           "description" : null,
           "type" : {
@@ -5614,7 +5681,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionCollectionFilterInput",
+              "name" : "ModelSubscriptionMediaCollectionFilterInput",
               "ofType" : null
             }
           },
@@ -5627,7 +5694,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionCollectionFilterInput",
+              "name" : "ModelSubscriptionMediaCollectionFilterInput",
               "ofType" : null
             }
           },
@@ -5745,7 +5812,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelSubscriptionSchedulerFilterInput",
+        "name" : "ModelSubscriptionPostingScheduleFilterInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -5819,7 +5886,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionSchedulerFilterInput",
+              "name" : "ModelSubscriptionPostingScheduleFilterInput",
               "ofType" : null
             }
           },
@@ -5832,7 +5899,7 @@
             "name" : null,
             "ofType" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelSubscriptionSchedulerFilterInput",
+              "name" : "ModelSubscriptionPostingScheduleFilterInput",
               "ofType" : null
             }
           },
@@ -5909,6 +5976,109 @@
           },
           "defaultValue" : null
         } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelFloatInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "ne",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "eq",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "le",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "lt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ge",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "gt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "between",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Float",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "attributeExists",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "attributeType",
+          "description" : null,
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "ModelAttributeTypes",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "SCALAR",
+        "name" : "Float",
+        "description" : "Built-in Float",
+        "fields" : null,
+        "inputFields" : null,
         "interfaces" : null,
         "enumValues" : null,
         "possibleTypes" : null
@@ -6008,109 +6178,6 @@
               "name" : "Float",
               "ofType" : null
             }
-          },
-          "defaultValue" : null
-        } ],
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "SCALAR",
-        "name" : "Float",
-        "description" : "Built-in Float",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "INPUT_OBJECT",
-        "name" : "ModelFloatInput",
-        "description" : null,
-        "fields" : null,
-        "inputFields" : [ {
-          "name" : "ne",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "eq",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "le",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "lt",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "ge",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "gt",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "between",
-          "description" : null,
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Float",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "attributeExists",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Boolean",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "attributeType",
-          "description" : null,
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "ModelAttributeTypes",
-            "ofType" : null
           },
           "defaultValue" : null
         } ],
@@ -6901,51 +6968,6 @@
         "onFragment" : false,
         "onField" : true
       }, {
-        "name" : "aws_api_key",
-        "description" : "Tells the service this field/object has access authorized by an API key.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_auth",
-        "description" : "Directs the schema to enforce authorization on a field",
-        "locations" : [ "FIELD_DEFINITION" ],
-        "args" : [ {
-          "name" : "cognito_groups",
-          "description" : "List of cognito user pool groups which have access on this field",
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_iam",
-        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_lambda",
-        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
         "name" : "deprecated",
         "description" : null,
         "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
@@ -6958,48 +6980,6 @@
             "ofType" : null
           },
           "defaultValue" : "\"No longer supported\""
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_publish",
-        "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
-        "locations" : [ "FIELD_DEFINITION" ],
-        "args" : [ {
-          "name" : "subscriptions",
-          "description" : "List of subscriptions which will be published to when this mutation is called.",
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_cognito_user_pools",
-        "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ {
-          "name" : "cognito_groups",
-          "description" : "List of cognito user pool groups which have access on this field",
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
         } ],
         "onOperation" : false,
         "onFragment" : false,
@@ -7026,8 +7006,95 @@
         "onFragment" : false,
         "onField" : false
       }, {
+        "name" : "aws_auth",
+        "description" : "Directs the schema to enforce authorization on a field",
+        "locations" : [ "FIELD_DEFINITION" ],
+        "args" : [ {
+          "name" : "cognito_groups",
+          "description" : "List of cognito user pool groups which have access on this field",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_api_key",
+        "description" : "Tells the service this field/object has access authorized by an API key.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_lambda",
+        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_publish",
+        "description" : "Tells the service which subscriptions will be published to when this mutation is called. This directive is deprecated use @aws_susbscribe directive instead.",
+        "locations" : [ "FIELD_DEFINITION" ],
+        "args" : [ {
+          "name" : "subscriptions",
+          "description" : "List of subscriptions which will be published to when this mutation is called.",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
         "name" : "aws_oidc",
         "description" : "Tells the service this field/object has access authorized by an OIDC token.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_cognito_user_pools",
+        "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ {
+          "name" : "cognito_groups",
+          "description" : "List of cognito user pool groups which have access on this field",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_iam",
+        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
         "onOperation" : false,

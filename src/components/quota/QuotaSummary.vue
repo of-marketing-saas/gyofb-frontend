@@ -21,17 +21,17 @@ const StatusToQuota: Record<SubscriptionStatus, UserQuota> = {
   [SubscriptionStatus.GUEST]: {
     maxPosts: 10,
     maxMedias: 20,
-    maxSchedulers: 10,
+    maxSchedules: 10,
   },
   [SubscriptionStatus.LEVEL_ONE]: {
     maxPosts: 100,
     maxMedias: 100,
-    maxSchedulers: 50,
+    maxSchedules: 50,
   },
   [SubscriptionStatus.LEVEL_TWO]: {
     maxPosts: 200,
     maxMedias: 200,
-    maxSchedulers: 100,
+    maxSchedules: 100,
   },
 };
 
@@ -42,7 +42,7 @@ const summary = computed(() => {
   const quota = StatusToQuota[status];
   const posts = user?.posts?.items || [];
   const medias = user?.medias?.items || [];
-  const schedulers = user?.schedulers?.items || [];
+  const schedules = user?.schedules?.items || [];
   return {
     posts: {
       used: posts.length,
@@ -52,9 +52,9 @@ const summary = computed(() => {
       used: medias.length,
       max: quota.maxMedias,
     },
-    schedulers: {
-      used: schedulers.length,
-      max: quota.maxSchedulers,
+    schedules: {
+      used: schedules.length,
+      max: quota.maxSchedules,
     },
   };
 });
@@ -65,7 +65,7 @@ const quotaColor = (key: string): string => {
       return 'primary';
     case 'medias':
       return 'secondary';
-    case 'schedulers':
+    case 'schedules':
       return 'success';
     default:
       return 'primary';

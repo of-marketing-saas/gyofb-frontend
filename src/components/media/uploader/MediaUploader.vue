@@ -1,6 +1,12 @@
 <template>
   <v-card width="100%">
-    <v-card-title>Collection Media Uploader</v-card-title>
+    <v-card-title class="d-flex flex-row">
+      Collection Media Uploader
+      <v-spacer></v-spacer>
+      <v-btn :disabled="isEmpty(files)" prepend-icon="mdi-upload" color="info" @click="uploadFiles">
+        Upload
+      </v-btn>
+    </v-card-title>
     <drop-zone class="elevation-5" @files-dropped="addFiles">
       <v-container>
         <v-row class="justify-center pb-2">
@@ -25,15 +31,12 @@
       </v-container>
     </drop-zone>
     <files-preview :files="files" @delete-file="removeFile"></files-preview>
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn prepend-icon="mdi-upload" color="info" @click="uploadFiles">Upload</v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import isEmpty from 'lodash/isEmpty';
 import DropZone from '@/components/media/uploader/DropZone.vue';
 import FilesPreview from '@/components/media/uploader/FilesPreview.vue';
 
@@ -51,19 +54,23 @@ const collectionId = computed(() => route.params.collectionId as string);
 const { user } = useUserStore();
 
 const uploadFiles = () => {
-  files.value.forEach((fileObj) => {
-    const callback = async (s3Key: string) => {
-      const { file } = fileObj;
-      const input: CreateMediaInput = {
-        userMediasId: user.id,
-        collectionMediasId: collectionId.value,
-        s3Key,
-        name: file.name,
-        type: file.type,
+  files.value
+    .filter((fileObj) => {
+      return fileObj.status !== 'uploaded' && fileObj.status !== 'duplicate';
+    })
+    .forEach((fileObj) => {
+      const callback = async (s3Key: string) => {
+        const { file } = fileObj;
+        const input: CreateMediaInput = {
+          userMediasId: user.id,
+          mediaCollectionMediasId: collectionId.value,
+          s3Key,
+          name: file.name,
+          type: file.type,
+        };
+        createMedia(input);
       };
-      createMedia(input);
-    };
-    uploadFile(user.id, fileObj, callback);
-  });
+      uploadFile(user.id, fileObj, callback);
+    });
 };
 </script>

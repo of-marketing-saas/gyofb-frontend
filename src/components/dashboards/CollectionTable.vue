@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { toRefs } from 'vue';
 import type { PropType } from 'vue';
-import type { Collection } from '@/API';
+import type { MediaCollection } from '@/API';
 import CreateCollection from './CreateCollection.vue';
 
 const headers = [
@@ -35,7 +35,7 @@ const headers = [
 
 const props = defineProps({
   collections: {
-    type: Array as PropType<Collection[]>,
+    type: Array as PropType<MediaCollection[]>,
     required: true,
   },
   title: {

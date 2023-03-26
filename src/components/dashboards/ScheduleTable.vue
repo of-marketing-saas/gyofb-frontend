@@ -4,13 +4,11 @@
     <v-card-title class="d-flex flex-row">
       {{ title }}
       <v-spacer></v-spacer>
-      <v-btn density="comfortable" color="primary" exact to="/schedulers/new">
-        New Scheduler
-      </v-btn>
+      <v-btn density="comfortable" color="primary" exact to="/schedules/new"> New Schedule </v-btn>
     </v-card-title>
-    <v-data-table :headers="headers" :items="schedulers" item-value="name" class="elevation-2">
+    <v-data-table :headers="headers" :items="schedules" item-value="name" class="elevation-2">
       <template v-slot:item.name="{ item }">
-        <v-btn size="small" color="info" variant="plain" exact :to="`/schedulers/${item.raw.id}`">
+        <v-btn size="small" color="info" variant="plain" exact :to="`/schedules/${item.raw.id}`">
           {{ item.raw.name }}
         </v-btn>
       </template>
@@ -38,7 +36,7 @@
 <script setup lang="ts">
 import { toRefs } from 'vue';
 import type { PropType } from 'vue';
-import type { Scheduler } from '@/API';
+import type { PostingSchedule } from '@/API';
 import { dateTimeFromSeconds, dateTimeFromISOString } from '@/helpers/dateTimeHelper';
 
 const headers = [
@@ -51,8 +49,8 @@ const headers = [
 ];
 
 const props = defineProps({
-  schedulers: {
-    type: Array as PropType<Scheduler[]>,
+  schedules: {
+    type: Array as PropType<PostingSchedule[]>,
     required: true,
   },
   title: {
@@ -72,5 +70,5 @@ const statusColor = (status: string): string => {
   }
 };
 
-const { title, schedulers } = toRefs(props);
+const { title, schedules } = toRefs(props);
 </script>

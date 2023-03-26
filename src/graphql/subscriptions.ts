@@ -17,13 +17,15 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           name
+          description
           createdAt
           updatedAt
           userCollectionsId
+          mediaCollectionScheduleId
         }
         nextToken
       }
-      schedulers {
+      schedules {
         items {
           id
           name
@@ -34,8 +36,8 @@ export const onCreateUser = /* GraphQL */ `
           status
           createdAt
           updatedAt
-          userSchedulersId
-          collectionSchedulersId
+          userSchedulesId
+          postingScheduleCollectionId
         }
         nextToken
       }
@@ -49,7 +51,7 @@ export const onCreateUser = /* GraphQL */ `
           createdAt
           updatedAt
           userMediasId
-          collectionMediasId
+          mediaCollectionMediasId
         }
         nextToken
       }
@@ -62,9 +64,9 @@ export const onCreateUser = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
@@ -89,13 +91,15 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           name
+          description
           createdAt
           updatedAt
           userCollectionsId
+          mediaCollectionScheduleId
         }
         nextToken
       }
-      schedulers {
+      schedules {
         items {
           id
           name
@@ -106,8 +110,8 @@ export const onUpdateUser = /* GraphQL */ `
           status
           createdAt
           updatedAt
-          userSchedulersId
-          collectionSchedulersId
+          userSchedulesId
+          postingScheduleCollectionId
         }
         nextToken
       }
@@ -121,7 +125,7 @@ export const onUpdateUser = /* GraphQL */ `
           createdAt
           updatedAt
           userMediasId
-          collectionMediasId
+          mediaCollectionMediasId
         }
         nextToken
       }
@@ -134,9 +138,9 @@ export const onUpdateUser = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
@@ -161,13 +165,15 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           name
+          description
           createdAt
           updatedAt
           userCollectionsId
+          mediaCollectionScheduleId
         }
         nextToken
       }
-      schedulers {
+      schedules {
         items {
           id
           name
@@ -178,8 +184,8 @@ export const onDeleteUser = /* GraphQL */ `
           status
           createdAt
           updatedAt
-          userSchedulersId
-          collectionSchedulersId
+          userSchedulesId
+          postingScheduleCollectionId
         }
         nextToken
       }
@@ -193,7 +199,7 @@ export const onDeleteUser = /* GraphQL */ `
           createdAt
           updatedAt
           userMediasId
-          collectionMediasId
+          mediaCollectionMediasId
         }
         nextToken
       }
@@ -206,9 +212,9 @@ export const onDeleteUser = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
@@ -218,13 +224,14 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
-export const onCreateCollection = /* GraphQL */ `
-  subscription OnCreateCollection(
-    $filter: ModelSubscriptionCollectionFilterInput
+export const onCreateMediaCollection = /* GraphQL */ `
+  subscription OnCreateMediaCollection(
+    $filter: ModelSubscriptionMediaCollectionFilterInput
   ) {
-    onCreateCollection(filter: $filter) {
+    onCreateMediaCollection(filter: $filter) {
       id
       name
+      description
       user {
         id
         accountEmail
@@ -237,7 +244,7 @@ export const onCreateCollection = /* GraphQL */ `
         collections {
           nextToken
         }
-        schedulers {
+        schedules {
           nextToken
         }
         medias {
@@ -259,7 +266,7 @@ export const onCreateCollection = /* GraphQL */ `
           createdAt
           updatedAt
           userMediasId
-          collectionMediasId
+          mediaCollectionMediasId
         }
         nextToken
       }
@@ -272,42 +279,65 @@ export const onCreateCollection = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
       }
-      schedulers {
-        items {
+      schedule {
+        id
+        name
+        startAt
+        endAt
+        postTarget
+        subreddits
+        status
+        user {
           id
-          name
-          startAt
-          endAt
-          postTarget
-          subreddits
-          status
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
           createdAt
           updatedAt
-          userSchedulersId
-          collectionSchedulersId
         }
-        nextToken
+        collection {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          userCollectionsId
+          mediaCollectionScheduleId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userSchedulesId
+        postingScheduleCollectionId
       }
       createdAt
       updatedAt
       userCollectionsId
+      mediaCollectionScheduleId
     }
   }
 `;
-export const onUpdateCollection = /* GraphQL */ `
-  subscription OnUpdateCollection(
-    $filter: ModelSubscriptionCollectionFilterInput
+export const onUpdateMediaCollection = /* GraphQL */ `
+  subscription OnUpdateMediaCollection(
+    $filter: ModelSubscriptionMediaCollectionFilterInput
   ) {
-    onUpdateCollection(filter: $filter) {
+    onUpdateMediaCollection(filter: $filter) {
       id
       name
+      description
       user {
         id
         accountEmail
@@ -320,7 +350,7 @@ export const onUpdateCollection = /* GraphQL */ `
         collections {
           nextToken
         }
-        schedulers {
+        schedules {
           nextToken
         }
         medias {
@@ -342,7 +372,7 @@ export const onUpdateCollection = /* GraphQL */ `
           createdAt
           updatedAt
           userMediasId
-          collectionMediasId
+          mediaCollectionMediasId
         }
         nextToken
       }
@@ -355,42 +385,65 @@ export const onUpdateCollection = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
       }
-      schedulers {
-        items {
+      schedule {
+        id
+        name
+        startAt
+        endAt
+        postTarget
+        subreddits
+        status
+        user {
           id
-          name
-          startAt
-          endAt
-          postTarget
-          subreddits
-          status
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
           createdAt
           updatedAt
-          userSchedulersId
-          collectionSchedulersId
         }
-        nextToken
+        collection {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          userCollectionsId
+          mediaCollectionScheduleId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userSchedulesId
+        postingScheduleCollectionId
       }
       createdAt
       updatedAt
       userCollectionsId
+      mediaCollectionScheduleId
     }
   }
 `;
-export const onDeleteCollection = /* GraphQL */ `
-  subscription OnDeleteCollection(
-    $filter: ModelSubscriptionCollectionFilterInput
+export const onDeleteMediaCollection = /* GraphQL */ `
+  subscription OnDeleteMediaCollection(
+    $filter: ModelSubscriptionMediaCollectionFilterInput
   ) {
-    onDeleteCollection(filter: $filter) {
+    onDeleteMediaCollection(filter: $filter) {
       id
       name
+      description
       user {
         id
         accountEmail
@@ -403,7 +456,7 @@ export const onDeleteCollection = /* GraphQL */ `
         collections {
           nextToken
         }
-        schedulers {
+        schedules {
           nextToken
         }
         medias {
@@ -425,7 +478,7 @@ export const onDeleteCollection = /* GraphQL */ `
           createdAt
           updatedAt
           userMediasId
-          collectionMediasId
+          mediaCollectionMediasId
         }
         nextToken
       }
@@ -438,32 +491,54 @@ export const onDeleteCollection = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
       }
-      schedulers {
-        items {
+      schedule {
+        id
+        name
+        startAt
+        endAt
+        postTarget
+        subreddits
+        status
+        user {
           id
-          name
-          startAt
-          endAt
-          postTarget
-          subreddits
-          status
+          accountEmail
+          accountId
+          accountName
+          accountAvator
+          accountQueryCode
+          subscriptionStatus
+          subscriptionExpiredAt
           createdAt
           updatedAt
-          userSchedulersId
-          collectionSchedulersId
         }
-        nextToken
+        collection {
+          id
+          name
+          description
+          createdAt
+          updatedAt
+          userCollectionsId
+          mediaCollectionScheduleId
+        }
+        posts {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userSchedulesId
+        postingScheduleCollectionId
       }
       createdAt
       updatedAt
       userCollectionsId
+      mediaCollectionScheduleId
     }
   }
 `;
@@ -487,7 +562,7 @@ export const onCreateMedia = /* GraphQL */ `
         collections {
           nextToken
         }
-        schedulers {
+        schedules {
           nextToken
         }
         medias {
@@ -502,6 +577,7 @@ export const onCreateMedia = /* GraphQL */ `
       collection {
         id
         name
+        description
         user {
           id
           accountEmail
@@ -520,12 +596,23 @@ export const onCreateMedia = /* GraphQL */ `
         posts {
           nextToken
         }
-        schedulers {
-          nextToken
+        schedule {
+          id
+          name
+          startAt
+          endAt
+          postTarget
+          subreddits
+          status
+          createdAt
+          updatedAt
+          userSchedulesId
+          postingScheduleCollectionId
         }
         createdAt
         updatedAt
         userCollectionsId
+        mediaCollectionScheduleId
       }
       posts {
         items {
@@ -536,9 +623,9 @@ export const onCreateMedia = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
@@ -546,7 +633,7 @@ export const onCreateMedia = /* GraphQL */ `
       createdAt
       updatedAt
       userMediasId
-      collectionMediasId
+      mediaCollectionMediasId
     }
   }
 `;
@@ -570,7 +657,7 @@ export const onUpdateMedia = /* GraphQL */ `
         collections {
           nextToken
         }
-        schedulers {
+        schedules {
           nextToken
         }
         medias {
@@ -585,6 +672,7 @@ export const onUpdateMedia = /* GraphQL */ `
       collection {
         id
         name
+        description
         user {
           id
           accountEmail
@@ -603,12 +691,23 @@ export const onUpdateMedia = /* GraphQL */ `
         posts {
           nextToken
         }
-        schedulers {
-          nextToken
+        schedule {
+          id
+          name
+          startAt
+          endAt
+          postTarget
+          subreddits
+          status
+          createdAt
+          updatedAt
+          userSchedulesId
+          postingScheduleCollectionId
         }
         createdAt
         updatedAt
         userCollectionsId
+        mediaCollectionScheduleId
       }
       posts {
         items {
@@ -619,9 +718,9 @@ export const onUpdateMedia = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
@@ -629,7 +728,7 @@ export const onUpdateMedia = /* GraphQL */ `
       createdAt
       updatedAt
       userMediasId
-      collectionMediasId
+      mediaCollectionMediasId
     }
   }
 `;
@@ -653,7 +752,7 @@ export const onDeleteMedia = /* GraphQL */ `
         collections {
           nextToken
         }
-        schedulers {
+        schedules {
           nextToken
         }
         medias {
@@ -668,6 +767,7 @@ export const onDeleteMedia = /* GraphQL */ `
       collection {
         id
         name
+        description
         user {
           id
           accountEmail
@@ -686,12 +786,23 @@ export const onDeleteMedia = /* GraphQL */ `
         posts {
           nextToken
         }
-        schedulers {
-          nextToken
+        schedule {
+          id
+          name
+          startAt
+          endAt
+          postTarget
+          subreddits
+          status
+          createdAt
+          updatedAt
+          userSchedulesId
+          postingScheduleCollectionId
         }
         createdAt
         updatedAt
         userCollectionsId
+        mediaCollectionScheduleId
       }
       posts {
         items {
@@ -702,9 +813,9 @@ export const onDeleteMedia = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
@@ -712,15 +823,15 @@ export const onDeleteMedia = /* GraphQL */ `
       createdAt
       updatedAt
       userMediasId
-      collectionMediasId
+      mediaCollectionMediasId
     }
   }
 `;
-export const onCreateScheduler = /* GraphQL */ `
-  subscription OnCreateScheduler(
-    $filter: ModelSubscriptionSchedulerFilterInput
+export const onCreatePostingSchedule = /* GraphQL */ `
+  subscription OnCreatePostingSchedule(
+    $filter: ModelSubscriptionPostingScheduleFilterInput
   ) {
-    onCreateScheduler(filter: $filter) {
+    onCreatePostingSchedule(filter: $filter) {
       id
       name
       startAt
@@ -740,7 +851,7 @@ export const onCreateScheduler = /* GraphQL */ `
         collections {
           nextToken
         }
-        schedulers {
+        schedules {
           nextToken
         }
         medias {
@@ -755,6 +866,7 @@ export const onCreateScheduler = /* GraphQL */ `
       collection {
         id
         name
+        description
         user {
           id
           accountEmail
@@ -773,12 +885,23 @@ export const onCreateScheduler = /* GraphQL */ `
         posts {
           nextToken
         }
-        schedulers {
-          nextToken
+        schedule {
+          id
+          name
+          startAt
+          endAt
+          postTarget
+          subreddits
+          status
+          createdAt
+          updatedAt
+          userSchedulesId
+          postingScheduleCollectionId
         }
         createdAt
         updatedAt
         userCollectionsId
+        mediaCollectionScheduleId
       }
       posts {
         items {
@@ -789,25 +912,25 @@ export const onCreateScheduler = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
       }
       createdAt
       updatedAt
-      userSchedulersId
-      collectionSchedulersId
+      userSchedulesId
+      postingScheduleCollectionId
     }
   }
 `;
-export const onUpdateScheduler = /* GraphQL */ `
-  subscription OnUpdateScheduler(
-    $filter: ModelSubscriptionSchedulerFilterInput
+export const onUpdatePostingSchedule = /* GraphQL */ `
+  subscription OnUpdatePostingSchedule(
+    $filter: ModelSubscriptionPostingScheduleFilterInput
   ) {
-    onUpdateScheduler(filter: $filter) {
+    onUpdatePostingSchedule(filter: $filter) {
       id
       name
       startAt
@@ -827,7 +950,7 @@ export const onUpdateScheduler = /* GraphQL */ `
         collections {
           nextToken
         }
-        schedulers {
+        schedules {
           nextToken
         }
         medias {
@@ -842,6 +965,7 @@ export const onUpdateScheduler = /* GraphQL */ `
       collection {
         id
         name
+        description
         user {
           id
           accountEmail
@@ -860,12 +984,23 @@ export const onUpdateScheduler = /* GraphQL */ `
         posts {
           nextToken
         }
-        schedulers {
-          nextToken
+        schedule {
+          id
+          name
+          startAt
+          endAt
+          postTarget
+          subreddits
+          status
+          createdAt
+          updatedAt
+          userSchedulesId
+          postingScheduleCollectionId
         }
         createdAt
         updatedAt
         userCollectionsId
+        mediaCollectionScheduleId
       }
       posts {
         items {
@@ -876,25 +1011,25 @@ export const onUpdateScheduler = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
       }
       createdAt
       updatedAt
-      userSchedulersId
-      collectionSchedulersId
+      userSchedulesId
+      postingScheduleCollectionId
     }
   }
 `;
-export const onDeleteScheduler = /* GraphQL */ `
-  subscription OnDeleteScheduler(
-    $filter: ModelSubscriptionSchedulerFilterInput
+export const onDeletePostingSchedule = /* GraphQL */ `
+  subscription OnDeletePostingSchedule(
+    $filter: ModelSubscriptionPostingScheduleFilterInput
   ) {
-    onDeleteScheduler(filter: $filter) {
+    onDeletePostingSchedule(filter: $filter) {
       id
       name
       startAt
@@ -914,7 +1049,7 @@ export const onDeleteScheduler = /* GraphQL */ `
         collections {
           nextToken
         }
-        schedulers {
+        schedules {
           nextToken
         }
         medias {
@@ -929,6 +1064,7 @@ export const onDeleteScheduler = /* GraphQL */ `
       collection {
         id
         name
+        description
         user {
           id
           accountEmail
@@ -947,12 +1083,23 @@ export const onDeleteScheduler = /* GraphQL */ `
         posts {
           nextToken
         }
-        schedulers {
-          nextToken
+        schedule {
+          id
+          name
+          startAt
+          endAt
+          postTarget
+          subreddits
+          status
+          createdAt
+          updatedAt
+          userSchedulesId
+          postingScheduleCollectionId
         }
         createdAt
         updatedAt
         userCollectionsId
+        mediaCollectionScheduleId
       }
       posts {
         items {
@@ -963,17 +1110,17 @@ export const onDeleteScheduler = /* GraphQL */ `
           createdAt
           updatedAt
           userPostsId
-          collectionPostsId
+          mediaCollectionPostsId
           mediaPostsId
-          schedulerPostsId
+          postingSchedulePostsId
           postMediaId
         }
         nextToken
       }
       createdAt
       updatedAt
-      userSchedulersId
-      collectionSchedulersId
+      userSchedulesId
+      postingScheduleCollectionId
     }
   }
 `;
@@ -1005,9 +1152,11 @@ export const onCreatePost = /* GraphQL */ `
         collection {
           id
           name
+          description
           createdAt
           updatedAt
           userCollectionsId
+          mediaCollectionScheduleId
         }
         posts {
           nextToken
@@ -1015,9 +1164,9 @@ export const onCreatePost = /* GraphQL */ `
         createdAt
         updatedAt
         userMediasId
-        collectionMediasId
+        mediaCollectionMediasId
       }
-      scheduler {
+      schedule {
         id
         name
         startAt
@@ -1040,24 +1189,26 @@ export const onCreatePost = /* GraphQL */ `
         collection {
           id
           name
+          description
           createdAt
           updatedAt
           userCollectionsId
+          mediaCollectionScheduleId
         }
         posts {
           nextToken
         }
         createdAt
         updatedAt
-        userSchedulersId
-        collectionSchedulersId
+        userSchedulesId
+        postingScheduleCollectionId
       }
       createdAt
       updatedAt
       userPostsId
-      collectionPostsId
+      mediaCollectionPostsId
       mediaPostsId
-      schedulerPostsId
+      postingSchedulePostsId
       postMediaId
     }
   }
@@ -1090,9 +1241,11 @@ export const onUpdatePost = /* GraphQL */ `
         collection {
           id
           name
+          description
           createdAt
           updatedAt
           userCollectionsId
+          mediaCollectionScheduleId
         }
         posts {
           nextToken
@@ -1100,9 +1253,9 @@ export const onUpdatePost = /* GraphQL */ `
         createdAt
         updatedAt
         userMediasId
-        collectionMediasId
+        mediaCollectionMediasId
       }
-      scheduler {
+      schedule {
         id
         name
         startAt
@@ -1125,24 +1278,26 @@ export const onUpdatePost = /* GraphQL */ `
         collection {
           id
           name
+          description
           createdAt
           updatedAt
           userCollectionsId
+          mediaCollectionScheduleId
         }
         posts {
           nextToken
         }
         createdAt
         updatedAt
-        userSchedulersId
-        collectionSchedulersId
+        userSchedulesId
+        postingScheduleCollectionId
       }
       createdAt
       updatedAt
       userPostsId
-      collectionPostsId
+      mediaCollectionPostsId
       mediaPostsId
-      schedulerPostsId
+      postingSchedulePostsId
       postMediaId
     }
   }
@@ -1175,9 +1330,11 @@ export const onDeletePost = /* GraphQL */ `
         collection {
           id
           name
+          description
           createdAt
           updatedAt
           userCollectionsId
+          mediaCollectionScheduleId
         }
         posts {
           nextToken
@@ -1185,9 +1342,9 @@ export const onDeletePost = /* GraphQL */ `
         createdAt
         updatedAt
         userMediasId
-        collectionMediasId
+        mediaCollectionMediasId
       }
-      scheduler {
+      schedule {
         id
         name
         startAt
@@ -1210,24 +1367,26 @@ export const onDeletePost = /* GraphQL */ `
         collection {
           id
           name
+          description
           createdAt
           updatedAt
           userCollectionsId
+          mediaCollectionScheduleId
         }
         posts {
           nextToken
         }
         createdAt
         updatedAt
-        userSchedulersId
-        collectionSchedulersId
+        userSchedulesId
+        postingScheduleCollectionId
       }
       createdAt
       updatedAt
       userPostsId
-      collectionPostsId
+      mediaCollectionPostsId
       mediaPostsId
-      schedulerPostsId
+      postingSchedulePostsId
       postMediaId
     }
   }

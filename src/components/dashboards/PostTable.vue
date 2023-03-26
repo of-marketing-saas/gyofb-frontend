@@ -10,7 +10,7 @@
         <media-avatar :media="item.raw.media" />
       </template>
       <template v-slot:item.scheduler="{ item }">
-        <v-btn variant="plain" color="info" exact :to="`/schedulers/${item.raw.scheduler.id}`">
+        <v-btn variant="plain" color="info" exact :to="`/schedules/${item.raw.scheduler.id}`">
           {{ item.raw.scheduler.name }}
         </v-btn>
       </template>

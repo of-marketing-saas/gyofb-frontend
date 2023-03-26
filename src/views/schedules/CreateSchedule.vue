@@ -1,6 +1,6 @@
 <template>
   <v-card width="100%">
-    <v-card-title>Create Post Scheduler</v-card-title>
+    <v-card-title>Create Post Schedule</v-card-title>
     <v-card-text>
       <v-row no-gutters class="flex-nowrap">
         <v-col cols="6" class="pr-2">
@@ -10,7 +10,7 @@
             chips
             label="Select a collection"
             :items="collectionOptions"
-            v-model="scheduler.collectionSchedulersId"
+            v-model="schedule.postingScheduleCollectionId"
           ></v-select>
         </v-col>
       </v-row>
@@ -19,17 +19,17 @@
           <v-text-field
             variant="outlined"
             density="comfortable"
-            label="Scheduler Name"
-            v-model="scheduler.name"
+            label="Schedule Name"
+            v-model="schedule.name"
           ></v-text-field>
         </v-col>
         <v-col cols="6">
           <v-text-field
             variant="outlined"
             density="comfortable"
-            label="Scheduler status"
+            label="Schedule status"
             readonly
-            :model-value="scheduler.status"
+            :model-value="schedule.status"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -83,7 +83,7 @@
             variant="outlined"
             density="comfortable"
             label="Subreddits"
-            v-model="scheduler.subreddits"
+            v-model="schedule.subreddits"
             :items="subreddits"
             prepend-inner-icon="mdi-reddit"
             closable-chips
@@ -111,7 +111,7 @@
             variant="outlined"
             density="comfortable"
             label="Post Count"
-            v-model="scheduler.postTarget"
+            v-model="schedule.postTarget"
             type="number"
           ></v-text-field>
         </v-col>
@@ -119,7 +119,7 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn variant="flat" :loading="loading" color="primary" @click="onCreateScheduler()">
+      <v-btn variant="flat" :loading="loading" color="primary" @click="onCreateSchedule()">
         Schedule
       </v-btn>
     </v-card-actions>
@@ -128,18 +128,18 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue';
-import type { Collection, CreateSchedulerInput } from '@/API';
+import type { MediaCollection, CreatePostingScheduleInput } from '@/API';
 import moment from 'moment';
-import { useSchedulerStore } from '@/stores/schedulers';
+import { useScheduleStore } from '@/stores/schedules';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 
 const router = useRouter();
-const { loading, createScheduler } = useSchedulerStore();
+const { loading, createSchedule } = useScheduleStore();
 const { user } = useUserStore();
 
 const collectionOptions = computed(() => {
-  const collections = (user?.collections?.items || []) as Collection[];
+  const collections = (user?.collections?.items || []) as MediaCollection[];
   return collections.map(({ id, name }) => ({ title: name, value: id }));
 });
 
@@ -156,53 +156,53 @@ const subreddits = [
 ];
 
 const tomorrow = moment().startOf('day').add(1, 'day');
-const scheduler = reactive<CreateSchedulerInput>({
-  name: 'Default Scheduler',
+const schedule = reactive<CreatePostingScheduleInput>({
+  name: 'Default Schedule',
   status: 'PENDING',
   startAt: tomorrow.unix(),
   endAt: tomorrow.add(7, 'day').unix(),
   postTarget: 10,
   subreddits: [],
-  userSchedulersId: user.id,
-} as CreateSchedulerInput);
+  userSchedulesId: user.id,
+});
 
 const startDate = computed({
-  get: () => moment(scheduler.startAt, 'X').format('YYYY-MM-DD'),
+  get: () => moment(schedule.startAt, 'X').format('YYYY-MM-DD'),
   set: (value: string) => {
-    const datetime = moment(scheduler.startAt).format('YYYY-MM-DD HH:MM').split(' ');
+    const datetime = moment(schedule.startAt).format('YYYY-MM-DD HH:MM').split(' ');
     const newDateTime = `${value} ${datetime[1]}`;
-    scheduler.startAt = moment(newDateTime).unix();
+    schedule.startAt = moment(newDateTime).unix();
   },
 });
 const startTime = computed({
-  get: () => moment(scheduler.startAt, 'X').format('HH:MM'),
+  get: () => moment(schedule.startAt, 'X').format('HH:MM'),
   set: (value: string) => {
-    const datetime = moment(scheduler.startAt, 'X').format('YYYY-MM-DD HH:MM').split(' ');
+    const datetime = moment(schedule.startAt, 'X').format('YYYY-MM-DD HH:MM').split(' ');
     const newDateTime = `${datetime[0]} ${value}`;
-    scheduler.startAt = moment(newDateTime).unix();
+    schedule.startAt = moment(newDateTime).unix();
   },
 });
 const endDate = computed({
-  get: () => moment(scheduler.endAt, 'X').format('YYYY-MM-DD'),
+  get: () => moment(schedule.endAt, 'X').format('YYYY-MM-DD'),
   set: (value: string) => {
-    const datetime = moment(scheduler.endAt, 'X').format('YYYY-MM-DD HH:MM').split(' ');
+    const datetime = moment(schedule.endAt, 'X').format('YYYY-MM-DD HH:MM').split(' ');
     const newDateTime = `${value} ${datetime[1]}`;
-    scheduler.endAt = moment(newDateTime).unix();
+    schedule.endAt = moment(newDateTime).unix();
   },
 });
 const endTime = computed({
-  get: () => moment(scheduler.endAt, 'X').format('HH:MM'),
+  get: () => moment(schedule.endAt, 'X').format('HH:MM'),
   set: (value: string) => {
-    const datetime = moment(scheduler.endAt, 'X').format('YYYY-MM-DD HH:MM').split(' ');
+    const datetime = moment(schedule.endAt, 'X').format('YYYY-MM-DD HH:MM').split(' ');
     const newDateTime = `${datetime[0]} ${value}`;
-    scheduler.endAt = moment(newDateTime).unix();
+    schedule.endAt = moment(newDateTime).unix();
   },
 });
 
-const onCreateScheduler = async () => {
-  console.log(scheduler);
-  const createdScheduler = await createScheduler(scheduler);
-  router.push(`/schedulers/${createdScheduler?.id}`);
+const onCreateSchedule = async () => {
+  console.log(schedule);
+  const createdSchedule = await createSchedule(schedule);
+  router.push(`/schedules/${createdSchedule?.id}`);
 };
 </script>
 

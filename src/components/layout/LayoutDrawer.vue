@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-model="model" class="d-flex">
     <v-sheet color="background" class="pa-4">
-      <v-btn block prepend-icon="mdi-calendar-account" color="primary" exact to="/schedulers/new">
+      <v-btn block prepend-icon="mdi-calendar-account" color="primary" exact to="/schedules/new">
         Schedule Posts
       </v-btn>
     </v-sheet>
@@ -41,9 +41,9 @@ const links = [
     link: '/collections',
   },
   {
-    title: 'Schedulers',
+    title: 'Schedules',
     icon: 'mdi-airplane-clock',
-    link: '/schedulers',
+    link: '/schedules',
   },
 ];
 
