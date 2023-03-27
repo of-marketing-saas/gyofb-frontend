@@ -35,30 +35,37 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { toRefs } from 'vue';
 import isEmpty from 'lodash/isEmpty';
 import DropZone from '@/components/media/uploader/DropZone.vue';
 import FilesPreview from '@/components/media/uploader/FilesPreview.vue';
 
 import { useFileList } from '../compositions';
-import { useRoute } from 'vue-router';
 import { useUserStore } from '@/stores/user';
-import { useCollectionStore } from '@/stores/collections';
+import { useMediaStore } from '@/stores/medias';
 import type { CreateMediaInput } from '@/API';
 
 const { files, addFiles, removeFile, uploadFile } = useFileList();
-const { createMedia } = useCollectionStore();
+const { createMedia } = useMediaStore();
 
-const route = useRoute();
-const collectionId = computed(() => route.params.collectionId as string);
 const { user } = useUserStore();
 
-const uploadFiles = () => {
-  files.value
+const props = defineProps({
+  collectionId: {
+    type: String,
+    required: true,
+  },
+});
+
+const { collectionId } = toRefs(props);
+const emit = defineEmits(['file-uploaded']);
+
+const uploadFiles = async () => {
+  const requests = files.value
     .filter((fileObj) => {
       return fileObj.status !== 'uploaded' && fileObj.status !== 'duplicate';
     })
-    .forEach((fileObj) => {
+    .map((fileObj) => {
       const callback = async (s3Key: string) => {
         const { file } = fileObj;
         const input: CreateMediaInput = {
@@ -70,7 +77,9 @@ const uploadFiles = () => {
         };
         createMedia(input);
       };
-      uploadFile(user.id, fileObj, callback);
+      return uploadFile(user.id, fileObj, callback);
     });
+  await Promise.all(requests);
+  emit('file-uploaded');
 };
 </script>

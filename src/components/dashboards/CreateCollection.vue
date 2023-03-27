@@ -23,7 +23,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn class="mr-4" variant="tonal" color="primary" @click="onCreateCollection()">
+        <v-btn class="mr-2" variant="tonal" color="primary" @click="onCreateCollection()">
           Create
         </v-btn>
       </v-card-actions>
@@ -70,7 +70,7 @@ const onCreateCollection = async () => {
     description: collectionDescription.value,
     userCollectionsId: user.id,
   });
-  router.push(`/collections/${collection?.id}}`);
+  router.push(`/collections/${collection?.id}`);
   dialog.value = false;
 };
 </script>

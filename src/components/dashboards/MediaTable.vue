@@ -13,6 +13,17 @@
       <template v-slot:item.createdAt="{ item }">
         {{ dateTimeFromISOString(item.raw.createdAt) }}
       </template>
+      <template v-slot:item.actions="{ item }">
+        <v-btn
+          icon="mdi-delete"
+          variant="plain"
+          :loading="operateId === item.raw.id"
+          color="warning"
+          size="small"
+          @click="emit('delete-media', item.raw.id, item.raw.s3Key)"
+        >
+        </v-btn>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -30,6 +41,7 @@ const headers = [
   { title: 'Media Name', align: 'start', key: 'name', sortable: false },
   { title: 'Media Type', key: 'type' },
   { title: 'Created At', key: 'createdAt' },
+  { title: 'Actions', key: 'actions', sortable: false },
 ];
 
 const props = defineProps({
@@ -41,7 +53,12 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  operateId: {
+    type: String,
+    default: '',
+  },
 });
+const emit = defineEmits(['delete-media']);
 
-const { title, medias } = toRefs(props);
+const { title, medias, operateId } = toRefs(props);
 </script>

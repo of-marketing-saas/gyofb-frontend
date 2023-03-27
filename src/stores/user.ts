@@ -52,5 +52,9 @@ export const useUserStore = defineStore('user', () => {
     }
   };
 
-  return { user, initialize, updateAccount };
+  const reloadUser = async () => {
+    await loadAccount(amplifyUser.value);
+  };
+
+  return { user, reloadUser, initialize, updateAccount };
 });

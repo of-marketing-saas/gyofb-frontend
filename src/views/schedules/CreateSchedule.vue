@@ -119,7 +119,13 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn variant="flat" :loading="loading" color="primary" @click="onCreateSchedule()">
+      <v-btn
+        class="mr-2"
+        variant="flat"
+        :loading="loading"
+        color="primary"
+        @click="onCreateSchedule()"
+      >
         Schedule
       </v-btn>
     </v-card-actions>
@@ -136,7 +142,7 @@ import { useUserStore } from '@/stores/user';
 
 const router = useRouter();
 const { loading, createSchedule } = useScheduleStore();
-const { user } = useUserStore();
+const { user, reloadUser } = useUserStore();
 
 const collectionOptions = computed(() => {
   const collections = (user?.collections?.items || []) as MediaCollection[];
@@ -200,8 +206,8 @@ const endTime = computed({
 });
 
 const onCreateSchedule = async () => {
-  console.log(schedule);
   const createdSchedule = await createSchedule(schedule);
+  await reloadUser();
   router.push(`/schedules/${createdSchedule?.id}`);
 };
 </script>

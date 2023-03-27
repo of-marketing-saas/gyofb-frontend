@@ -18,6 +18,17 @@
           {{ item.raw.name }}
         </v-btn>
       </template>
+      <template v-slot:item.actions="{ item }">
+        <v-btn
+          icon="mdi-delete"
+          variant="plain"
+          :loading="operateId === item.raw.id"
+          color="warning"
+          size="small"
+          @click="emit('delete-collection', item.raw.id)"
+        >
+        </v-btn>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -30,7 +41,9 @@ import CreateCollection from './CreateCollection.vue';
 
 const headers = [
   { title: 'Collection Name', align: 'start', key: 'name', sortable: false },
+  { title: 'Description', key: 'description' },
   { title: 'Created At', key: 'createdAt' },
+  { title: 'Actions', key: 'actions', sortable: false },
 ];
 
 const props = defineProps({
@@ -42,6 +55,11 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  operateId: {
+    type: String,
+    default: '',
+  },
 });
-const { title, collections } = toRefs(props);
+const emit = defineEmits(['delete-collection']);
+const { title, collections, operateId } = toRefs(props);
 </script>

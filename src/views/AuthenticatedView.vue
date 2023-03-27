@@ -1,5 +1,6 @@
 <template>
   <v-theme-provider :theme="theme">
+    <notification-bar />
     <v-app v-if="accountUser.id" id="inspire">
       <layout-app-bar />
       <v-main class="flex-8">
@@ -20,6 +21,7 @@ import { useAuthenticator } from '@aws-amplify/ui-vue';
 import LayoutFooter from '@/components/layout/LayoutFooter.vue';
 import LayoutAppBar from '@/components/layout/LayoutAppBar.vue';
 import LoadingView from '@/components/LoadingView.vue';
+import NotificationBar from '@/components/notification/NotificationBar.vue';
 import { useUserStore } from '@/stores/user';
 
 const { user } = toRefs(useAuthenticator());
@@ -32,7 +34,6 @@ const updateTheme = (event: any) => {
 };
 
 const theme = computed(() => vuetifyTheme.global.name.value);
-
 onMounted(() => {
   initialize(user.value);
   const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');

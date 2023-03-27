@@ -29,6 +29,17 @@
       <template v-slot:item.createdAt="{ item }">
         {{ dateTimeFromISOString(item.raw.createdAt) }}
       </template>
+      <template v-slot:item.actions="{ item }">
+        <v-btn
+          icon="mdi-delete"
+          variant="plain"
+          :loading="operateId === item.raw.id"
+          color="warning"
+          size="small"
+          @click="emit('delete-schedule', item.raw.id)"
+        >
+        </v-btn>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -46,6 +57,7 @@ const headers = [
   { title: 'Start At', key: 'startAt' },
   { title: 'End At', key: 'endAt' },
   { title: 'Created At', key: 'createdAt' },
+  { title: 'Actions', key: 'actions', sortable: false },
 ];
 
 const props = defineProps({
@@ -57,7 +69,12 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  operateId: {
+    type: String,
+    default: '',
+  },
 });
+const emit = defineEmits(['delete-schedule']);
 
 const statusColor = (status: string): string => {
   switch (status) {
@@ -70,5 +87,5 @@ const statusColor = (status: string): string => {
   }
 };
 
-const { title, schedules } = toRefs(props);
+const { title, schedules, operateId } = toRefs(props);
 </script>

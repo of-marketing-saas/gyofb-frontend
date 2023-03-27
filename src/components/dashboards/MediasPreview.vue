@@ -1,7 +1,14 @@
 <template>
   <v-dialog v-model="model" width="auto">
     <template v-slot:activator="{ props }">
-      <v-btn density="comfortable" variant="text" color="primary" v-bind="props">Preview</v-btn>
+      <v-btn
+        :disabled="isEmpty(medias)"
+        density="comfortable"
+        variant="text"
+        color="primary"
+        v-bind="props"
+        >Preview</v-btn
+      >
     </template>
     <v-card width="75vw">
       <v-card-text>
@@ -17,6 +24,7 @@
 <script setup lang="ts">
 import { ref, toRefs, computed } from 'vue';
 import type { PropType } from 'vue';
+import isEmpty from 'lodash/isEmpty';
 import type { Media } from '@/API';
 import MediaGallery from '@/components/media/MediaGallery.vue';
 

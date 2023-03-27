@@ -11,9 +11,9 @@
       <v-tab value="collection-medias" @click="router.push(`/collections/${collectionId}/medias`)">
         Medias
       </v-tab>
-      <v-tab value="collection-posts" @click="router.push(`/collections/${collectionId}/posts`)"
-        >Posts</v-tab
-      >
+      <v-tab value="collection-posts" @click="router.push(`/collections/${collectionId}/posts`)">
+        Posts
+      </v-tab>
       <v-tab value="collection-edit" @click="router.push(`/collections/${collectionId}/edit`)">
         Edit Media
       </v-tab>
